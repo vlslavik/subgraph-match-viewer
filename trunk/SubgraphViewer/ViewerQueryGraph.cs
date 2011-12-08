@@ -57,16 +57,17 @@ namespace SubgraphViewer
             int relativeX, relativeY;
             relativeX = endCenter.X - startCenter.X;
             relativeY = endCenter.Y - startCenter.Y;
-            double delta = ((double)radius) / 2;
+            double delta = radius / 3 * 2;
+            delta = 0;
             if(relativeX >= 0 && relativeY < 0)
             {
-                CoreCaluteEdge(startCenter.X + delta, startCenter.Y, endCenter.Y + delta, endCenter.Y, startCenter, endCenter, radius);
+                CoreCaluteEdge(startCenter.X + delta, startCenter.Y, endCenter.X + delta, endCenter.Y, startCenter, endCenter, radius);
             }
-            else if (relativeX > 0 && relativeY <= 0)
+            else if (relativeX > 0 && relativeY >= 0)
             {
                 if (relativeY == 0)
                 {
-                    CoreCaluteEdge(startCenter.X, startCenter.Y - delta, endCenter.X, endCenter.X - delta, startCenter, endCenter, radius);
+                    CoreCaluteEdge(startCenter.X, startCenter.Y + delta, endCenter.X, endCenter.Y + delta, startCenter, endCenter, radius);
                 }
                 else
                 {
@@ -75,17 +76,17 @@ namespace SubgraphViewer
             }
             else if (relativeX <= 0 && relativeY > 0)
             {
-                CoreCaluteEdge(startCenter.X - delta, startCenter.Y, endCenter.Y - delta, endCenter.Y, startCenter, endCenter, radius);
+                CoreCaluteEdge(startCenter.X - delta, startCenter.Y, endCenter.X - delta, endCenter.Y, startCenter, endCenter, radius);
             }
             else
             {
                 if (relativeY == 0)
                 {
-                    CoreCaluteEdge(startCenter.X, startCenter.Y + delta, endCenter.X, endCenter.Y + delta, startCenter, endCenter, radius);
+                    CoreCaluteEdge(startCenter.X, startCenter.Y - delta, endCenter.X, endCenter.Y - delta, startCenter, endCenter, radius);
                 }
                 else
                 {
-                    CoreCaluteEdge(startCenter.X + delta, startCenter.Y, endCenter.X + delta, endCenter.X, startCenter, endCenter, radius);
+                    CoreCaluteEdge(startCenter.X + delta, startCenter.Y, endCenter.X + delta, endCenter.Y, startCenter, endCenter, radius);
                 }
             }
         }
@@ -223,6 +224,7 @@ namespace SubgraphViewer
             labelLocation.X = Center.X - (int)ViewerConfig.NodeRadius / 2;
             labelLocation.Y = Center.Y - (int)ViewerConfig.NodeRadius / 2;
             drawer.DrawString(m_ID.ToString(), labelLocation);
+            //drawer.DrawEcllipse(location, 32, 32);
         }
 
         public Cell ToCell(string labelName)
@@ -427,6 +429,26 @@ namespace SubgraphViewer
         public QueryGraph GetLogicQueryGraph()
         {
             return m_Transfer.GetLogicQueryGraph();
+        }
+
+        public void SetLabel(int vid, string label)
+        {
+            if (m_AllNodes.ContainsKey(vid))
+            {
+                m_AllNodes[vid].Label = label;
+            }
+        }
+
+        public List<ViewerQueryNode> GetSortedIDNodeList()
+        {
+            List<ViewerQueryNode> res = new List<ViewerQueryNode>();
+            List<int> idList = new List<int>(m_AllNodes.Keys);
+            idList.Sort();
+            for (int i = 0; i < idList.Count; ++i)
+            {
+                res.Add(m_AllNodes[idList[i]]);
+            }
+            return res;
         }
     }
 }
