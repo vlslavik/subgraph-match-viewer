@@ -42,6 +42,9 @@
             this.label2 = new System.Windows.Forms.Label();
             this.textBox_StartVertex = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
+            this.textBox3 = new System.Windows.Forms.TextBox();
+            this.button3 = new System.Windows.Forms.Button();
+            this.buttonMatch = new System.Windows.Forms.Button();
             this.panel_bottom.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -60,6 +63,8 @@
             // panel_bottom
             // 
             this.panel_bottom.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel_bottom.Controls.Add(this.button3);
+            this.panel_bottom.Controls.Add(this.textBox3);
             this.panel_bottom.Controls.Add(this.button2);
             this.panel_bottom.Controls.Add(this.textBox2);
             this.panel_bottom.Controls.Add(this.textBox1);
@@ -80,7 +85,7 @@
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(7, 91);
+            this.button2.Location = new System.Drawing.Point(7, 32);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(63, 23);
             this.button2.TabIndex = 11;
@@ -103,9 +108,9 @@
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(402, 91);
+            this.button1.Location = new System.Drawing.Point(396, 93);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(63, 23);
+            this.button1.Size = new System.Drawing.Size(69, 23);
             this.button1.TabIndex = 8;
             this.button1.Text = "add_label";
             this.button1.UseVisualStyleBackColor = true;
@@ -148,7 +153,7 @@
             // 
             // textBox2_EndVertex
             // 
-            this.textBox2_EndVertex.Location = new System.Drawing.Point(86, 50);
+            this.textBox2_EndVertex.Location = new System.Drawing.Point(86, 52);
             this.textBox2_EndVertex.Name = "textBox2_EndVertex";
             this.textBox2_EndVertex.Size = new System.Drawing.Size(86, 21);
             this.textBox2_EndVertex.TabIndex = 3;
@@ -156,7 +161,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(5, 53);
+            this.label2.Location = new System.Drawing.Point(5, 61);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(65, 12);
             this.label2.TabIndex = 2;
@@ -164,7 +169,7 @@
             // 
             // textBox_StartVertex
             // 
-            this.textBox_StartVertex.Location = new System.Drawing.Point(86, 23);
+            this.textBox_StartVertex.Location = new System.Drawing.Point(86, 11);
             this.textBox_StartVertex.Name = "textBox_StartVertex";
             this.textBox_StartVertex.Size = new System.Drawing.Size(86, 21);
             this.textBox_StartVertex.TabIndex = 1;
@@ -172,17 +177,44 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(3, 26);
+            this.label1.Location = new System.Drawing.Point(3, 11);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(77, 12);
             this.label1.TabIndex = 0;
             this.label1.Text = "start_vertex";
+            // 
+            // textBox3
+            // 
+            this.textBox3.Location = new System.Drawing.Point(86, 93);
+            this.textBox3.Name = "textBox3";
+            this.textBox3.Size = new System.Drawing.Size(86, 21);
+            this.textBox3.TabIndex = 12;
+            // 
+            // button3
+            // 
+            this.button3.Location = new System.Drawing.Point(7, 92);
+            this.button3.Name = "button3";
+            this.button3.Size = new System.Drawing.Size(73, 23);
+            this.button3.TabIndex = 13;
+            this.button3.Text = "label_name";
+            this.button3.UseVisualStyleBackColor = true;
+            // 
+            // buttonMatch
+            // 
+            this.buttonMatch.Location = new System.Drawing.Point(40, 272);
+            this.buttonMatch.Name = "buttonMatch";
+            this.buttonMatch.Size = new System.Drawing.Size(544, 23);
+            this.buttonMatch.TabIndex = 2;
+            this.buttonMatch.Text = "Match!";
+            this.buttonMatch.UseVisualStyleBackColor = true;
+            this.buttonMatch.Click += new System.EventHandler(this.buttonMatch_Click);
             // 
             // Query
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(584, 422);
+            this.Controls.Add(this.buttonMatch);
             this.Controls.Add(this.panel_bottom);
             this.Controls.Add(this.panel_left);
             this.Name = "Query";
@@ -212,6 +244,9 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.ListBox listBox1;
         private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Button button3;
+        private System.Windows.Forms.TextBox textBox3;
+        private System.Windows.Forms.Button buttonMatch;
     }
 }
 
