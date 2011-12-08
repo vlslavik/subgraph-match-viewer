@@ -26,8 +26,11 @@ namespace SubgraphViewer
 
         public ViewerResultGraph(int id, ISubGraphViewerDrawer drawer, Point leftTop, ViewerQueryGraph vqg, Match m)
         {
+            m_AllNodes = new Dictionary<int, ViewerResultNode>();
             m_ID = id;
             m_Drawer = drawer;
+            m_Region = new Rectangle(leftTop, new Size(vqg.Region.Width, vqg.Region.Height));
+            
             Construct(vqg, m);
             Transfer(leftTop, vqg);
             GetAllEdges();

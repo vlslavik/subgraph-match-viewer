@@ -28,9 +28,18 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
+            this.SuspendLayout();
+            // 
+            // QueryResult
+            // 
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.ClientSize = new System.Drawing.Size(284, 262);
+            this.Name = "QueryResult";
             this.Text = "QueryResult";
+            this.Paint += new System.Windows.Forms.PaintEventHandler(this.QueryResult_Paint);
+            this.ResumeLayout(false);
+
         }
 
         #endregion

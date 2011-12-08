@@ -25,12 +25,12 @@ namespace SubgraphViewer
             CaculateLine(startNode, endNode);
         }
 
-        private void CoreCaluteEdge(double sx, double sy, double ex, double ey, Point center1, Point center2, double radius)
+        private void CoreCaluteEdge(double sx, double sy, double ex, double ey, Point startCenter, Point endCenter, double radius)
         {
             double startX, startY;
             double endX, endY;
-            AnalyticGeometryService.SegmentIntesectCycle(sx, sy, ex, ey, center1, radius, out endX, out endY);
-            AnalyticGeometryService.SegmentIntesectCycle(sx, sy, ex, ey, center2, radius, out startX, out startY);
+            AnalyticGeometryService.SegmentIntesectCycle(sx, sy, ex, ey, endCenter, radius, out endX, out endY);
+            AnalyticGeometryService.SegmentIntesectCycle(sx, sy, ex, ey, startCenter, radius, out startX, out startY);
             if (startX > 0 && startY > 0 && endX > 0 && endY > 0)
             {
                 StartLocation.X = (int)startX;
@@ -58,11 +58,11 @@ namespace SubgraphViewer
             relativeX = endCenter.X - startCenter.X;
             relativeY = endCenter.Y - startCenter.Y;
             double delta = ((double)radius) / 2;
-            if(relativeX >= 0 && relativeY > 0)
+            if(relativeX >= 0 && relativeY < 0)
             {
                 CoreCaluteEdge(startCenter.X + delta, startCenter.Y, endCenter.Y + delta, endCenter.Y, startCenter, endCenter, radius);
             }
-            else if (relativeY > 0 && relativeY <= 0)
+            else if (relativeX > 0 && relativeY <= 0)
             {
                 if (relativeY == 0)
                 {
@@ -73,7 +73,7 @@ namespace SubgraphViewer
                     CoreCaluteEdge(startCenter.X - delta, startCenter.Y, endCenter.X - delta, endCenter.Y, startCenter, endCenter, radius);
                 }
             }
-            else if (relativeX <= 0 && relativeY < 0)
+            else if (relativeX <= 0 && relativeY > 0)
             {
                 CoreCaluteEdge(startCenter.X - delta, startCenter.Y, endCenter.Y - delta, endCenter.Y, startCenter, endCenter, radius);
             }
@@ -334,10 +334,13 @@ namespace SubgraphViewer
 
         public void AddEdge(int sid, int tid)
         {
-            ViewerQueryNode startNode = m_AllNodes[sid];
-            ViewerQueryNode endNode = m_AllNodes[tid];
-            startNode.AddOutLink(tid);
-            endNode.AddInLink(sid);
+            if (m_AllNodes.ContainsKey(sid) && m_AllNodes.ContainsKey(tid))
+            {
+                ViewerQueryNode startNode = m_AllNodes[sid];
+                ViewerQueryNode endNode = m_AllNodes[tid];
+                startNode.AddOutLink(tid);
+                endNode.AddInLink(sid);
+            }
         }
 
         public void Remove(Rectangle removeArea)

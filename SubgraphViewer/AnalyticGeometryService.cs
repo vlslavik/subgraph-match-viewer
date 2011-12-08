@@ -32,7 +32,7 @@ namespace SubgraphViewer
             intersectY1 = -1;
             intersectX2 = -1;
             intersectY2 = -1;
-            if (p1x - p2x < 1e-10)
+            if (Math.Abs(p1x - p2x) < 1e-10)
             {
                 double p12x = p1x;
                 if (p12x - center2.X > r2)
@@ -46,6 +46,7 @@ namespace SubgraphViewer
                 intersectX1 = intersectX2 = p12x;
                 intersectY1 = y1;
                 intersectY2 = y2;
+                return;
             }
             if (true)
             {
@@ -56,7 +57,7 @@ namespace SubgraphViewer
             GetKB(p1x, p1y, p2x, p2y, out k, out b1);
             double a = k * k + 1;
             double b2 = (2 * k * b1 - 2 * k * center2.Y - 2 * center2.X);
-            double c = (b1 - center2.Y) * (b1 - center2.Y) - r2 * r2;
+            double c = (b1 - center2.Y) * (b1 - center2.Y) - r2 * r2 + center2.X * center2.X;
             GetRoot(a, b2, c, out x1, out x2);
             intersectX1 = x1;
             intersectX2 = x2;
@@ -66,7 +67,7 @@ namespace SubgraphViewer
 
         public static void GetKB(double x1, double y1, double x2, double y2, out double k, out double b)
         {
-            if (x1 - x2 < 1e-10)
+            if (Math.Abs(x1 - x2) < 1e-10)
             {
                 k = 0;
                 b = x1;
@@ -83,8 +84,8 @@ namespace SubgraphViewer
                 throw new Exception("discriminant should be non negative");
             }
             double discriminant = Math.Sqrt(b * b - 4 * a * c);
-            x1 = (discriminant - b) / (2 * a);
-            x2 = (b - discriminant) / (2 * a);
+            x1 = (-b + discriminant ) / (2 * a);
+            x2 = (-b - discriminant) / (2 * a);
         }
 
         public static bool LocateInSection(double guess, double x1, double x2)
