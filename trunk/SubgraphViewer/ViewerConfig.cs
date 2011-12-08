@@ -10,7 +10,7 @@ namespace SubgraphViewer
     {
         public static int QueryPanelHeight = 500;
         public static int QueryPanleWidth = 600;
-        public static float LinePenWidth = 1;
+        public static float LinePenWidth = 2;
         public static double NodeRadius = 13;
         public static int ToolItemSize = 26;
         public static int LeftPanelWidth = 40;

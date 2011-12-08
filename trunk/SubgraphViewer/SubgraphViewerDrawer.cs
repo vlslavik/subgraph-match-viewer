@@ -20,13 +20,14 @@ namespace SubgraphViewer
         private Pen m_LinePen;
         private Font m_Font;
         private Brush m_Brush;
-
+        AdjustableArrowCap m_LineCap;
         public SubgraphViewerDrawer(Graphics g)
         {
             m_Graphics = g;
             m_LinePen = new Pen(Color.Black, ViewerConfig.LinePenWidth);
             m_Font = new Font(ViewerConfig.FontName, ViewerConfig.FontSize);
             m_Brush = new SolidBrush(ViewerConfig.BrushColor);
+            m_LineCap = new System.Drawing.Drawing2D.AdjustableArrowCap(6, 6, true);
         }
 
         public void DrawImage(Image im, Point location)
@@ -36,9 +37,8 @@ namespace SubgraphViewer
 
         public void DrawArrow(Point start, Point end)
         {
-            m_LinePen.EndCap = LineCap.ArrowAnchor;
+            m_LinePen.CustomEndCap = m_LineCap;
             m_Graphics.DrawLine(m_LinePen, start, end);
-            m_LinePen.EndCap = LineCap.NoAnchor;
         }
 
         public void DrawString(string text, Point location)

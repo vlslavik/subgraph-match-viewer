@@ -6,6 +6,10 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using Trinity.GraphDB.Query.Subgraph;
+using Trinity.GraphDB.Query;
+using Trinity.Configuration;
+using Trinity.Core;
 
 namespace SubgraphViewer
 {
@@ -13,7 +17,7 @@ namespace SubgraphViewer
     {
         private ViewerQueryGraph m_ViewerGraph;
         private ToolBox m_ToolBox;
-
+        private HashSet<string> m_LoadedLabelIndex;
         public Query()
         {
             InitializeComponent();
@@ -22,6 +26,9 @@ namespace SubgraphViewer
             SubgraphViewerDrawer toolBoxDrawer = new SubgraphViewerDrawer(panel_left.CreateGraphics());
             m_ViewerGraph = new ViewerQueryGraph(graphDrawer);
             m_ToolBox = new ToolBox(toolBoxDrawer);
+            TrinityConfig.CurrentRunningMode = RunningMode.Client;
+            //List<string> hostNameList = Global.BlackBoard.HostNameList;
+            m_LoadedLabelIndex = new HashSet<string>();
         }
 
         private void IntializeFormLayout()
@@ -73,19 +80,56 @@ namespace SubgraphViewer
 
         private void panel_left_MouseDown(object sender, MouseEventArgs e)
         {
-            textBox_StartVertex.Text = e.X.ToString() + " " + e.Y.ToString();
             m_ToolBox.SetSelectedItem(e.Location);
             panel_left.Invalidate();
         }
 
         private void buttonMatch_Click(object sender, EventArgs e)
         {
-            if (m_ViewerGraph.LabelName == null)
+            if (textBoxLabelName.Text.Trim() == "")
             {
                 MessageBox.Show("please set the label name first", "Hint");
                 return;
             }
+            m_ViewerGraph.LabelName = textBoxLabelName.Text.Trim();
+            QueryGraph qg = m_ViewerGraph.GetLogicQueryGraph();
+            int maxMatchNum = 1024;
+            try
+            {
+                if (textBoxMaxMatchNum.Text.Trim() != "")
+                {
+                    maxMatchNum = int.Parse(textBoxMaxMatchNum.Text.Trim());
+                }
+            }
+            catch (System.Exception ex)
+            {
+                maxMatchNum = 1024;
+            }
+            buttonMatch.Enabled = false;
+            if (m_LoadedLabelIndex.Contains(m_ViewerGraph.LabelName) == false)
+            {
+                SubGraphCoreMatch.LoadLabelDictionaryIndex(m_ViewerGraph.LabelName);
+                m_LoadedLabelIndex.Add(m_ViewerGraph.LabelName);
+            }
+            List<Match> matches = SubGraphCoreMatch.OnLineQuery(qg, m_ViewerGraph.LabelName, maxMatchNum);
+            buttonMatch.Enabled = true;
+            QueryResult qr = new QueryResult(m_ViewerGraph, matches);
+            qr.Show();
+        }
 
+        private void button2_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                int sid = int.Parse(textBoxStartVertex.Text.Trim());
+                int tid = int.Parse(textBoxEndVertex.Text.Trim());
+                m_ViewerGraph.AddEdge(sid, tid);
+                Invalidate();
+            }
+            catch (System.Exception ex)
+            {
+            	
+            }
         }
 
 
