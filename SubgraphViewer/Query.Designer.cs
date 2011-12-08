@@ -35,13 +35,13 @@
             this.label6 = new System.Windows.Forms.Label();
             this.textBoxLabelName = new System.Windows.Forms.TextBox();
             this.button2 = new System.Windows.Forms.Button();
-            this.textBox2 = new System.Windows.Forms.TextBox();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.textBoxVertexLabel = new System.Windows.Forms.TextBox();
+            this.textBoxVertexID = new System.Windows.Forms.TextBox();
             this.button1 = new System.Windows.Forms.Button();
             this.label5 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
-            this.listBox1 = new System.Windows.Forms.ListBox();
+            this.listBoxLabelList = new System.Windows.Forms.ListBox();
             this.textBoxEndVertex = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.textBoxStartVertex = new System.Windows.Forms.TextBox();
@@ -70,13 +70,13 @@
             this.panel_bottom.Controls.Add(this.label6);
             this.panel_bottom.Controls.Add(this.textBoxLabelName);
             this.panel_bottom.Controls.Add(this.button2);
-            this.panel_bottom.Controls.Add(this.textBox2);
-            this.panel_bottom.Controls.Add(this.textBox1);
+            this.panel_bottom.Controls.Add(this.textBoxVertexLabel);
+            this.panel_bottom.Controls.Add(this.textBoxVertexID);
             this.panel_bottom.Controls.Add(this.button1);
             this.panel_bottom.Controls.Add(this.label5);
             this.panel_bottom.Controls.Add(this.label4);
             this.panel_bottom.Controls.Add(this.label3);
-            this.panel_bottom.Controls.Add(this.listBox1);
+            this.panel_bottom.Controls.Add(this.listBoxLabelList);
             this.panel_bottom.Controls.Add(this.textBoxEndVertex);
             this.panel_bottom.Controls.Add(this.label2);
             this.panel_bottom.Controls.Add(this.textBoxStartVertex);
@@ -129,19 +129,19 @@
             this.button2.UseVisualStyleBackColor = true;
             this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
-            // textBox2
+            // textBoxVertexLabel
             // 
-            this.textBox2.Location = new System.Drawing.Point(465, 62);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(76, 21);
-            this.textBox2.TabIndex = 10;
+            this.textBoxVertexLabel.Location = new System.Drawing.Point(465, 62);
+            this.textBoxVertexLabel.Name = "textBoxVertexLabel";
+            this.textBoxVertexLabel.Size = new System.Drawing.Size(76, 21);
+            this.textBoxVertexLabel.TabIndex = 10;
             // 
-            // textBox1
+            // textBoxVertexID
             // 
-            this.textBox1.Location = new System.Drawing.Point(463, 32);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(76, 21);
-            this.textBox1.TabIndex = 9;
+            this.textBoxVertexID.Location = new System.Drawing.Point(463, 32);
+            this.textBoxVertexID.Name = "textBoxVertexID";
+            this.textBoxVertexID.Size = new System.Drawing.Size(76, 21);
+            this.textBoxVertexID.TabIndex = 9;
             // 
             // button1
             // 
@@ -151,6 +151,7 @@
             this.button1.TabIndex = 8;
             this.button1.Text = "add_label";
             this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // label5
             // 
@@ -179,14 +180,14 @@
             this.label3.TabIndex = 5;
             this.label3.Text = "label_list";
             // 
-            // listBox1
+            // listBoxLabelList
             // 
-            this.listBox1.FormattingEnabled = true;
-            this.listBox1.ItemHeight = 12;
-            this.listBox1.Location = new System.Drawing.Point(226, 26);
-            this.listBox1.Name = "listBox1";
-            this.listBox1.Size = new System.Drawing.Size(154, 88);
-            this.listBox1.TabIndex = 4;
+            this.listBoxLabelList.FormattingEnabled = true;
+            this.listBoxLabelList.ItemHeight = 12;
+            this.listBoxLabelList.Location = new System.Drawing.Point(226, 26);
+            this.listBoxLabelList.Name = "listBoxLabelList";
+            this.listBoxLabelList.Size = new System.Drawing.Size(154, 88);
+            this.listBoxLabelList.TabIndex = 4;
             // 
             // textBoxEndVertex
             // 
@@ -257,13 +258,13 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.TextBox textBoxStartVertex;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.TextBox textBox2;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox textBoxVertexLabel;
+        private System.Windows.Forms.TextBox textBoxVertexID;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.ListBox listBox1;
+        private System.Windows.Forms.ListBox listBoxLabelList;
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.TextBox textBoxLabelName;
         private System.Windows.Forms.Button buttonMatch;

@@ -12,6 +12,7 @@ namespace SubgraphViewer
         void DrawImage(Image im, Point location);
         void DrawArrow(Point start, Point end);
         void DrawString(string text, Point location);
+        void DrawEcllipse(Point p, float width, float height);
     }
 
     class SubgraphViewerDrawer:ISubGraphViewerDrawer
@@ -27,7 +28,7 @@ namespace SubgraphViewer
             m_LinePen = new Pen(Color.Black, ViewerConfig.LinePenWidth);
             m_Font = new Font(ViewerConfig.FontName, ViewerConfig.FontSize);
             m_Brush = new SolidBrush(ViewerConfig.BrushColor);
-            m_LineCap = new System.Drawing.Drawing2D.AdjustableArrowCap(6, 6, true);
+            m_LineCap = new System.Drawing.Drawing2D.AdjustableArrowCap(5, 5, true);
         }
 
         public void DrawImage(Image im, Point location)
@@ -37,13 +38,20 @@ namespace SubgraphViewer
 
         public void DrawArrow(Point start, Point end)
         {
+            //CustomLineCap old = m_LinePen.CustomEndCap;
             m_LinePen.CustomEndCap = m_LineCap;
             m_Graphics.DrawLine(m_LinePen, start, end);
+            //m_LinePen.CustomEndCap = old;
         }
 
         public void DrawString(string text, Point location)
         {
             m_Graphics.DrawString(text, m_Font, m_Brush, location);
+        }
+
+        public void DrawEcllipse(Point p, float width, float height)
+        {
+            m_Graphics.DrawEllipse(m_LinePen, p.X, p.Y, width, height);
         }
     }
 }

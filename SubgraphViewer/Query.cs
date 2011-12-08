@@ -132,6 +132,31 @@ namespace SubgraphViewer
             }
         }
 
+        private void UpdateLabelList()
+        {
+            listBoxLabelList.Items.Clear();
+            List<ViewerQueryNode> sortedList = m_ViewerGraph.GetSortedIDNodeList();
+            for (int i = 0; i < sortedList.Count; ++i)
+            {
+                listBoxLabelList.Items.Add(sortedList[i].ID + " " + sortedList[i].Label);
+            }
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                int vid = int.Parse(textBoxVertexID.Text.Trim());
+                string label = textBoxVertexLabel.Text.Trim();
+                m_ViewerGraph.SetLabel(vid, label);
+                UpdateLabelList();
+            }
+            catch (System.Exception ex)
+            {
+            	
+            }
+        }
+
 
     }
 }
