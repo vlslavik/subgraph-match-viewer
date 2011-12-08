@@ -3,22 +3,26 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Drawing;
+using Trinity.GraphDB;
+using Trinity.Core.Lib;
+using Trinity.GraphDB.Query.Subgraph;
 
 namespace SubgraphViewer
 {
 
-    class ViewerQueryEdge
+    class ViewerEdge
     {
         public Point StartLocation;
         public Point EndLocation;
         public int StartNodeID;
         public int EndNodeID;
-        public ViewerQueryEdge(ViewerQueryNode startNode, ViewerQueryNode endNode)
+        public ViewerEdge(ViewerQueryNode startNode, ViewerQueryNode endNode)
         {
             StartNodeID = startNode.ID;
             EndNodeID = endNode.ID;
             StartLocation = new Point(-1, -1);
             EndLocation = new Point(-1, -1);
+            CaculateLine(startNode, endNode);
         }
 
         private void CoreCaluteEdge(double sx, double sy, double ex, double ey, Point center1, Point center2, double radius)
@@ -129,6 +133,8 @@ namespace SubgraphViewer
         private HashSet<int> m_OutLinkList;
         private HashSet<int> m_InLinkList;
         private string m_Label;
+        private long m_MatchID;
+
 
         public string Label
         {
@@ -162,6 +168,14 @@ namespace SubgraphViewer
             m_Center = location;
             m_OutLinkList = new HashSet<int>();
             m_InLinkList = new HashSet<int>();
+        }
+
+        public ViewerQueryNode(ViewerQueryNode vqn)
+        {
+            m_ID = ID;
+            m_Center = vqn.Center;
+            m_OutLinkList = new HashSet<int>(vqn.OutLinkList);
+            m_InLinkList = new HashSet<int>(vqn.InLinkList);
         }
 
         public void AddOutLink(int targetID)
@@ -207,8 +221,21 @@ namespace SubgraphViewer
             drawer.DrawImage(icon, location);
             Point labelLocation = new Point();
             labelLocation.X = Center.X - (int)ViewerConfig.NodeRadius / 2;
-            labelLocation.Y = Center.Y - (int)ViewerConfig.NodeRadius;
+            labelLocation.Y = Center.Y - (int)ViewerConfig.NodeRadius / 2;
             drawer.DrawString(m_ID.ToString(), labelLocation);
+        }
+
+        public Cell ToCell(string labelName)
+        {
+            Cell c = new Cell();
+            c[labelName] = new XString(m_Label);
+            return c;
+        }
+
+        public void Transfer(Point transferV)
+        {
+            m_Center.X += transferV.X;
+            m_Center.Y += transferV.Y;
         }
     }
 
@@ -217,11 +244,37 @@ namespace SubgraphViewer
         private Dictionary<int, ViewerQueryNode> m_AllNodes;
         private int m_IDIndex = 0;
         private ISubGraphViewerDrawer m_Drawer;
+        private string m_LabelName;
+        private Rectangle m_Region;
+        private ViewerGraphToLogicQueryTransfer m_Transfer;
+
+        public string LabelName
+        {
+            get { return m_LabelName; }
+            set { m_LabelName = value; }
+        }
+
+        public List<ViewerQueryNode> NodesList
+        {
+            get { return m_AllNodes.Values.ToList(); }
+        }
+
+        public ViewerGraphToLogicQueryTransfer Transfer
+        {
+            get { return m_Transfer; }
+        }
+
+        public Rectangle Region
+        {
+            get { return m_Region; }
+        }
 
         public ViewerQueryGraph(ISubGraphViewerDrawer drawer)
         {
             m_Drawer = drawer;
             m_AllNodes = new Dictionary<int, ViewerQueryNode>();
+            m_LabelName = null;
+            m_Transfer = new ViewerGraphToLogicQueryTransfer(this);
         }
 
         public bool NodeOverlap(Point location)
@@ -245,7 +298,38 @@ namespace SubgraphViewer
             m_IDIndex += 1;
             ViewerQueryNode vqn = new ViewerQueryNode(m_IDIndex, location);
             m_AllNodes.Add(m_IDIndex, vqn);
+            UpdateRegion(location, (int)ViewerConfig.NodeRadius);
             return true;
+        }
+
+        public void UpdateRegion(Point center, int radius)
+        {
+            if (m_Region == null)
+            {
+                m_Region = new Rectangle(center.X, center.Y, radius, radius);
+                return;
+            }
+            int left = center.X - radius;
+            int right = center.X + radius;
+            int top = center.Y - radius;
+            int bottom = center.Y + radius;
+            if (m_Region.Left > left)
+            {
+                m_Region.X = left;
+            }
+            if (m_Region.Right < right)
+            {
+                m_Region.Width = right - left;
+            }
+            if (m_Region.Top < top)
+            {
+                m_Region.Y = top;
+            }
+            if (m_Region.Bottom > bottom)
+            {
+                m_Region.Height = bottom - top;
+            }
+
         }
 
         public void AddEdge(int sid, int tid)
@@ -266,8 +350,8 @@ namespace SubgraphViewer
                     return;
                 }
             }
-            List<ViewerQueryEdge> allEdges = GetAllEdges();
-            foreach (ViewerQueryEdge vqe in allEdges)
+            List<ViewerEdge> allEdges = GetAllEdges();
+            foreach (ViewerEdge vqe in allEdges)
             {
                 if (vqe.OverLap(removeArea) == true)
                 {
@@ -277,16 +361,16 @@ namespace SubgraphViewer
 
         }
 
-        public List<ViewerQueryEdge> GetAllEdges()
+        public List<ViewerEdge> GetAllEdges()
         {
-            List<ViewerQueryEdge> res = new List<ViewerQueryEdge>();
+            List<ViewerEdge> res = new List<ViewerEdge>();
             foreach (KeyValuePair<int, ViewerQueryNode> kv in m_AllNodes)
             {
                 ViewerQueryNode startNode = kv.Value;
                 foreach (int tid in startNode.OutLinkList)
                 {
                     ViewerQueryNode endNode = m_AllNodes[tid];
-                    ViewerQueryEdge vqe = new ViewerQueryEdge(startNode, endNode);
+                    ViewerEdge vqe = new ViewerEdge(startNode, endNode);
                     if (vqe.Valid())
                     {
                         res.Add(vqe);
@@ -329,12 +413,17 @@ namespace SubgraphViewer
                 vqn.Draw(m_Drawer, nodeIcon);
             }
 
-            List<ViewerQueryEdge> allEdges = GetAllEdges();
-            foreach (ViewerQueryEdge vqe in allEdges)
+            List<ViewerEdge> allEdges = GetAllEdges();
+            foreach (ViewerEdge vqe in allEdges)
             {
                 vqe.Draw(m_Drawer);
             }
 
+        }
+
+        public QueryGraph GetLogicQueryGraph()
+        {
+            return m_Transfer.GetLogicQueryGraph();
         }
     }
 }

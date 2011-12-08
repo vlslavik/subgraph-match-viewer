@@ -32,6 +32,10 @@ namespace SubgraphViewer
             //MessageBox.Show(this.BackColor.R.ToString() + " " + this.BackColor.G.ToString() + " " + this.BackColor.B.ToString());
             panel_left.Width = ViewerConfig.LeftPanelWidth;
             panel_bottom.Height = ViewerConfig.BottomPanelHeight;
+            buttonMatch.Width = panel_bottom.Width;
+            buttonMatch.Height = 20;
+            buttonMatch.Left = panel_bottom.Location.X;
+            buttonMatch.Top = panel_bottom.Location.Y - buttonMatch.Height;
         }
 
         private void Query_MouseMove(object sender, MouseEventArgs e)
@@ -72,6 +76,16 @@ namespace SubgraphViewer
             textBox_StartVertex.Text = e.X.ToString() + " " + e.Y.ToString();
             m_ToolBox.SetSelectedItem(e.Location);
             panel_left.Invalidate();
+        }
+
+        private void buttonMatch_Click(object sender, EventArgs e)
+        {
+            if (m_ViewerGraph.LabelName == null)
+            {
+                MessageBox.Show("please set the label name first", "Hint");
+                return;
+            }
+
         }
 
 
