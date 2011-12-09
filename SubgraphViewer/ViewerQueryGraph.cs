@@ -277,6 +277,7 @@ namespace SubgraphViewer
             m_AllNodes = new Dictionary<int, ViewerQueryNode>();
             m_LabelName = null;
             m_Transfer = new ViewerGraphToLogicQueryTransfer(this);
+            m_Region = new Rectangle(-1, -1, 0, 0);
         }
 
         public bool NodeOverlap(Point location)
@@ -306,31 +307,32 @@ namespace SubgraphViewer
 
         public void UpdateRegion(Point center, int radius)
         {
-            if (m_Region == null)
+            if (m_Region.X == -1)
             {
-                m_Region = new Rectangle(center.X, center.Y, radius, radius);
+                m_Region = new Rectangle(center.X - radius, center.Y - radius, 2 * radius,  2 * radius);
                 return;
             }
             int left = center.X - radius;
             int right = center.X + radius;
             int top = center.Y - radius;
             int bottom = center.Y + radius;
-            if (m_Region.Left > left)
+            if (m_Region.Left < left)
             {
-                m_Region.X = left;
+                left = m_Region.Left;
             }
-            if (m_Region.Right < right)
+            if (m_Region.Right > right)
             {
-                m_Region.Width = right - left;
+                right = m_Region.Right;
             }
             if (m_Region.Top < top)
             {
-                m_Region.Y = top;
+                top = m_Region.Top;
             }
             if (m_Region.Bottom > bottom)
             {
-                m_Region.Height = bottom - top;
+                bottom = m_Region.Bottom;
             }
+            m_Region = new Rectangle(left, top, right - left, bottom - top);
 
         }
 
@@ -423,6 +425,12 @@ namespace SubgraphViewer
             {
                 vqe.Draw(m_Drawer);
             }
+
+            if (m_Region.X != -1)
+            {
+                m_Drawer.DrawRectangle(m_Region);
+            }
+            
 
         }
 

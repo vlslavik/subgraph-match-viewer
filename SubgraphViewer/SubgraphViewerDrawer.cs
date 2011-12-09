@@ -13,6 +13,7 @@ namespace SubgraphViewer
         void DrawArrow(Point start, Point end);
         void DrawString(string text, Point location);
         void DrawEcllipse(Point p, float width, float height);
+        void DrawRectangle(Rectangle rc);
     }
 
     class SubgraphViewerDrawer:ISubGraphViewerDrawer
@@ -52,6 +53,11 @@ namespace SubgraphViewer
         public void DrawEcllipse(Point p, float width, float height)
         {
             m_Graphics.DrawEllipse(m_LinePen, p.X, p.Y, width, height);
+        }
+
+        public void DrawRectangle(Rectangle rc)
+        {
+            m_Graphics.DrawRectangle(m_LinePen, rc);
         }
     }
 }

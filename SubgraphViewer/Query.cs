@@ -59,6 +59,7 @@ namespace SubgraphViewer
                 {
                     MessageBox.Show("please select another proper location!", "Hint");
                 }
+                UpdateLabelList();
                 this.Invalidate();
             }
         }
@@ -115,6 +116,11 @@ namespace SubgraphViewer
             buttonMatch.Enabled = true;
             QueryResult qr = new QueryResult(m_ViewerGraph, matches);
             qr.Show();
+        }
+
+        private void SampleMatches()
+        {
+
         }
 
         private void button2_Click(object sender, EventArgs e)
