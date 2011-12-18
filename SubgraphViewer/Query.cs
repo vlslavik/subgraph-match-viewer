@@ -107,12 +107,13 @@ namespace SubgraphViewer
                 maxMatchNum = 1024;
             }
             buttonMatch.Enabled = false;
-            if (m_LoadedLabelIndex.Contains(m_ViewerGraph.LabelName) == false)
-            {
-                SubGraphCoreMatch.LoadLabelDictionaryIndex(m_ViewerGraph.LabelName);
-                m_LoadedLabelIndex.Add(m_ViewerGraph.LabelName);
-            }
-            List<Match> matches = SubGraphCoreMatch.OnLineQuery(qg, m_ViewerGraph.LabelName, maxMatchNum);
+            //if (m_LoadedLabelIndex.Contains(m_ViewerGraph.LabelName) == false)
+            //{
+            //    SubGraphCoreMatch.LoadLabelDictionaryIndex(m_ViewerGraph.LabelName);
+            //    m_LoadedLabelIndex.Add(m_ViewerGraph.LabelName);
+            //}
+            //List<Match> matches = SubGraphCoreMatch.OnLineQuery(qg, m_ViewerGraph.LabelName, maxMatchNum);
+            List<Match> matches = SampleMatches(qg);
             buttonMatch.Enabled = true;
             QueryResult qr = new QueryResult(m_ViewerGraph, matches);
             qr.Show();
@@ -128,7 +129,7 @@ namespace SubgraphViewer
                 Match m = new Match();
                 foreach (long cid in qg.CellIDSet)
                 {
-                    NodePair np = new NodePair();
+                    NodePair np = new NodePair(cid, ra.Next());
                 }
             }
             return res;
@@ -177,4 +178,3 @@ namespace SubgraphViewer
 
     }
 }
-ssssssakffdfffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffddfsa

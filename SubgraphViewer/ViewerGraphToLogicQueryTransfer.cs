@@ -28,6 +28,7 @@ namespace SubgraphViewer
             foreach (ViewerQueryNode vqn in m_ViewerQueryGraph.NodesList)
             {
                 Cell c = vqn.ToCell(labelName);
+                qg.AddCell(c);
                 m_Viewer2LogicDic.Add(vqn.ID, c.CellID);
                 m_Logic2ViewerDic.Add(c.CellID, vqn.ID);
             }
