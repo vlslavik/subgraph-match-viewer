@@ -301,36 +301,37 @@ namespace SubgraphViewer
             m_IDIndex += 1;
             ViewerQueryNode vqn = new ViewerQueryNode(m_IDIndex, location);
             m_AllNodes.Add(m_IDIndex, vqn);
-            UpdateRegion(location, (int)ViewerConfig.NodeRadius);
+            UpdateRegion();
             return true;
         }
 
-        public void UpdateRegion(Point center, int radius)
+        public void UpdateRegion()
         {
-            if (m_Region.X == -1)
+            int left = 10000;
+            int right = -10000;
+            int top = 10000;
+            int bottom = -10000;
+            int radius = (int)ViewerConfig.NodeRadius;
+            m_Region = new Rectangle(-1, -1, 0, 0);
+            foreach (ViewerQueryNode vqn in m_AllNodes.Values)
             {
-                m_Region = new Rectangle(center.X - radius, center.Y - radius, 2 * radius,  2 * radius);
-                return;
-            }
-            int left = center.X - radius;
-            int right = center.X + radius;
-            int top = center.Y - radius;
-            int bottom = center.Y + radius;
-            if (m_Region.Left < left)
-            {
-                left = m_Region.Left;
-            }
-            if (m_Region.Right > right)
-            {
-                right = m_Region.Right;
-            }
-            if (m_Region.Top < top)
-            {
-                top = m_Region.Top;
-            }
-            if (m_Region.Bottom > bottom)
-            {
-                bottom = m_Region.Bottom;
+                Point center = vqn.Center;
+                if (left > center.X - radius)
+                {
+                    left = center.X - radius; 
+                }
+                if (right < center.X + radius)
+                {
+                    right = center.X + radius;
+                }
+                if (top > center.Y - radius)
+                {
+                    top = center.Y - radius;
+                }
+                if (bottom < center.Y + radius)
+                {
+                    bottom = center.Y + radius;
+                }
             }
             m_Region = new Rectangle(left, top, right - left, bottom - top);
 
@@ -365,7 +366,6 @@ namespace SubgraphViewer
                     RemoveEdge(vqe.StartNodeID, vqe.EndNodeID);
                 }
             }
-
         }
 
         public List<ViewerEdge> GetAllEdges()
@@ -388,7 +388,7 @@ namespace SubgraphViewer
             return res;
         }
 
-        public void RemoveNode(int id)
+        private void RemoveNode(int id)
         {
             ViewerQueryNode removeNode = m_AllNodes[id];
             foreach (int tid in removeNode.OutLinkList)
@@ -400,6 +400,7 @@ namespace SubgraphViewer
                 RemoveEdge(sid, id);
             }
             m_AllNodes.Remove(id);
+            UpdateRegion();
         }
 
         public void RemoveEdge(int sid, int tid)

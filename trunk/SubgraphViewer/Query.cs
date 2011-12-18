@@ -118,9 +118,20 @@ namespace SubgraphViewer
             qr.Show();
         }
 
-        private void SampleMatches()
+        private List<Match> SampleMatches(QueryGraph qg)
         {
-
+            int matchNum = 5;
+            Random ra = new Random();
+            List<Match> res = new List<Match>();
+            for (int i = 0; i < matchNum; ++i)
+            {
+                Match m = new Match();
+                foreach (long cid in qg.CellIDSet)
+                {
+                    NodePair np = new NodePair();
+                }
+            }
+            return res;
         }
 
         private void button2_Click(object sender, EventArgs e)
@@ -166,3 +177,4 @@ namespace SubgraphViewer
 
     }
 }
+ssssssakffdfffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffddfsa
