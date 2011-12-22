@@ -65,6 +65,7 @@
             // panel_bottom
             // 
             this.panel_bottom.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel_bottom.Controls.Add(this.buttonMatch);
             this.panel_bottom.Controls.Add(this.textBoxMaxMatchNum);
             this.panel_bottom.Controls.Add(this.label7);
             this.panel_bottom.Controls.Add(this.label6);
@@ -82,14 +83,14 @@
             this.panel_bottom.Controls.Add(this.textBoxStartVertex);
             this.panel_bottom.Controls.Add(this.label1);
             this.panel_bottom.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel_bottom.Location = new System.Drawing.Point(40, 301);
+            this.panel_bottom.Location = new System.Drawing.Point(40, 257);
             this.panel_bottom.Name = "panel_bottom";
-            this.panel_bottom.Size = new System.Drawing.Size(544, 121);
+            this.panel_bottom.Size = new System.Drawing.Size(544, 165);
             this.panel_bottom.TabIndex = 1;
             // 
             // textBoxMaxMatchNum
             // 
-            this.textBoxMaxMatchNum.Location = new System.Drawing.Point(86, 95);
+            this.textBoxMaxMatchNum.Location = new System.Drawing.Point(85, 129);
             this.textBoxMaxMatchNum.Name = "textBoxMaxMatchNum";
             this.textBoxMaxMatchNum.Size = new System.Drawing.Size(86, 21);
             this.textBoxMaxMatchNum.TabIndex = 15;
@@ -97,7 +98,7 @@
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(7, 101);
+            this.label7.Location = new System.Drawing.Point(6, 135);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(71, 12);
             this.label7.TabIndex = 14;
@@ -106,7 +107,7 @@
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(416, 71);
+            this.label6.Location = new System.Drawing.Point(415, 105);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(35, 12);
             this.label6.TabIndex = 13;
@@ -114,14 +115,14 @@
             // 
             // textBoxLabelName
             // 
-            this.textBoxLabelName.Location = new System.Drawing.Point(465, 5);
+            this.textBoxLabelName.Location = new System.Drawing.Point(464, 39);
             this.textBoxLabelName.Name = "textBoxLabelName";
             this.textBoxLabelName.Size = new System.Drawing.Size(80, 21);
             this.textBoxLabelName.TabIndex = 12;
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(7, 32);
+            this.button2.Location = new System.Drawing.Point(6, 66);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(63, 23);
             this.button2.TabIndex = 11;
@@ -131,21 +132,21 @@
             // 
             // textBoxVertexLabel
             // 
-            this.textBoxVertexLabel.Location = new System.Drawing.Point(465, 62);
+            this.textBoxVertexLabel.Location = new System.Drawing.Point(464, 96);
             this.textBoxVertexLabel.Name = "textBoxVertexLabel";
             this.textBoxVertexLabel.Size = new System.Drawing.Size(76, 21);
             this.textBoxVertexLabel.TabIndex = 10;
             // 
             // textBoxVertexID
             // 
-            this.textBoxVertexID.Location = new System.Drawing.Point(463, 32);
+            this.textBoxVertexID.Location = new System.Drawing.Point(462, 66);
             this.textBoxVertexID.Name = "textBoxVertexID";
             this.textBoxVertexID.Size = new System.Drawing.Size(76, 21);
             this.textBoxVertexID.TabIndex = 9;
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(396, 93);
+            this.button1.Location = new System.Drawing.Point(395, 127);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(69, 23);
             this.button1.TabIndex = 8;
@@ -156,7 +157,7 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(394, 11);
+            this.label5.Location = new System.Drawing.Point(393, 45);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(65, 12);
             this.label5.TabIndex = 7;
@@ -165,7 +166,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(398, 37);
+            this.label4.Location = new System.Drawing.Point(397, 71);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(59, 12);
             this.label4.TabIndex = 6;
@@ -174,7 +175,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(272, 11);
+            this.label3.Location = new System.Drawing.Point(271, 25);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(65, 12);
             this.label3.TabIndex = 5;
@@ -184,14 +185,14 @@
             // 
             this.listBoxLabelList.FormattingEnabled = true;
             this.listBoxLabelList.ItemHeight = 12;
-            this.listBoxLabelList.Location = new System.Drawing.Point(226, 26);
+            this.listBoxLabelList.Location = new System.Drawing.Point(233, 45);
             this.listBoxLabelList.Name = "listBoxLabelList";
             this.listBoxLabelList.Size = new System.Drawing.Size(154, 88);
             this.listBoxLabelList.TabIndex = 4;
             // 
             // textBoxEndVertex
             // 
-            this.textBoxEndVertex.Location = new System.Drawing.Point(86, 52);
+            this.textBoxEndVertex.Location = new System.Drawing.Point(85, 86);
             this.textBoxEndVertex.Name = "textBoxEndVertex";
             this.textBoxEndVertex.Size = new System.Drawing.Size(86, 21);
             this.textBoxEndVertex.TabIndex = 3;
@@ -199,7 +200,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(5, 61);
+            this.label2.Location = new System.Drawing.Point(4, 95);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(65, 12);
             this.label2.TabIndex = 2;
@@ -207,7 +208,7 @@
             // 
             // textBoxStartVertex
             // 
-            this.textBoxStartVertex.Location = new System.Drawing.Point(86, 11);
+            this.textBoxStartVertex.Location = new System.Drawing.Point(85, 45);
             this.textBoxStartVertex.Name = "textBoxStartVertex";
             this.textBoxStartVertex.Size = new System.Drawing.Size(86, 21);
             this.textBoxStartVertex.TabIndex = 1;
@@ -215,7 +216,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(3, 11);
+            this.label1.Location = new System.Drawing.Point(2, 45);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(77, 12);
             this.label1.TabIndex = 0;
@@ -223,7 +224,7 @@
             // 
             // buttonMatch
             // 
-            this.buttonMatch.Location = new System.Drawing.Point(40, 272);
+            this.buttonMatch.Location = new System.Drawing.Point(0, -1);
             this.buttonMatch.Name = "buttonMatch";
             this.buttonMatch.Size = new System.Drawing.Size(544, 23);
             this.buttonMatch.TabIndex = 2;
@@ -236,7 +237,6 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(584, 422);
-            this.Controls.Add(this.buttonMatch);
             this.Controls.Add(this.panel_bottom);
             this.Controls.Add(this.panel_left);
             this.Name = "Query";
