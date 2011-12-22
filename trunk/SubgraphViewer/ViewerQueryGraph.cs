@@ -173,7 +173,7 @@ namespace SubgraphViewer
 
         public ViewerQueryNode(ViewerQueryNode vqn)
         {
-            m_ID = ID;
+            m_ID = vqn.ID;
             m_Center = vqn.Center;
             m_OutLinkList = new HashSet<int>(vqn.OutLinkList);
             m_InLinkList = new HashSet<int>(vqn.InLinkList);
@@ -437,6 +437,7 @@ namespace SubgraphViewer
 
         public QueryGraph GetLogicQueryGraph()
         {
+            m_Transfer = new ViewerGraphToLogicQueryTransfer(this);
             return m_Transfer.GetLogicQueryGraph();
         }
 

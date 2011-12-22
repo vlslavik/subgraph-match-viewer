@@ -29,6 +29,8 @@ namespace SubgraphViewer
             TrinityConfig.CurrentRunningMode = RunningMode.Client;
             //List<string> hostNameList = Global.BlackBoard.HostNameList;
             m_LoadedLabelIndex = new HashSet<string>();
+
+            m_ViewerGraph = SampleQueryGraph();
         }
 
         private void IntializeFormLayout()
@@ -41,8 +43,8 @@ namespace SubgraphViewer
             panel_bottom.Height = ViewerConfig.BottomPanelHeight;
             buttonMatch.Width = panel_bottom.Width;
             buttonMatch.Height = 20;
-            buttonMatch.Left = panel_bottom.Location.X;
-            buttonMatch.Top = panel_bottom.Location.Y - buttonMatch.Height;
+            //buttonMatch.Left = panel_bottom.Location.X;
+            //buttonMatch.Top = panel_bottom.Location.Y - buttonMatch.Height;
         }
 
         private void Query_MouseMove(object sender, MouseEventArgs e)
@@ -121,7 +123,7 @@ namespace SubgraphViewer
 
         private List<Match> SampleMatches(QueryGraph qg)
         {
-            int matchNum = 5;
+            int matchNum = 20;
             Random ra = new Random();
             List<Match> res = new List<Match>();
             for (int i = 0; i < matchNum; ++i)
@@ -130,9 +132,30 @@ namespace SubgraphViewer
                 foreach (long cid in qg.CellIDSet)
                 {
                     NodePair np = new NodePair(cid, ra.Next());
+                    m.PartialMatch.Add(np);
                 }
+                res.Add(m);
             }
             return res;
+        }
+
+        private ViewerQueryGraph SampleQueryGraph()
+        {
+            ViewerQueryGraph vqg = new ViewerQueryGraph(new SubgraphViewerDrawer(this.CreateGraphics()));
+            Point p1 = new Point(150, 150);
+            Point p2 = new Point(120,270);
+            Point p3 = new Point(180, 270);
+            vqg.AddNode(p1);
+            vqg.AddNode(p2);
+            vqg.AddNode(p3);
+            vqg.SetLabel(1, "sun");
+            vqg.SetLabel(2, "sun");
+            vqg.SetLabel(3, "sun");
+            vqg.AddEdge(1, 2);
+            vqg.AddEdge(1, 3);
+            textBoxLabelName.Text = "name";
+            UpdateLabelList();
+            return vqg;
         }
 
         private void button2_Click(object sender, EventArgs e)

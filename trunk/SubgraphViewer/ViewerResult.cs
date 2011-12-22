@@ -25,19 +25,33 @@ namespace SubgraphViewer
             int count = matches.Count;
             int row = count / col;
             int index = 0;
+            Point rowStartLocation = new Point();
             for (int i = 0; i < row; ++i)
             {
-                Point rowStartLocation = new Point();
                 rowStartLocation.X = margin;
-                rowStartLocation.Y += margin + i * (width + margin);
+                rowStartLocation.Y = margin + i * (queryRegion.Height + margin);
                 for (int j = 0; j < col; ++j)
                 {
                     Point myLocation = new Point();
-                    myLocation.X = rowStartLocation.X + j * (width + margin);
+                    myLocation.X = rowStartLocation.X + j * (queryRegion.Width + margin);
+                    myLocation.Y = rowStartLocation.Y;
                     ViewerResultGraph vrg = new ViewerResultGraph(index, drawer, myLocation, vqg, matches[index]);
                     index += 1;
                     m_AllResultGraph.Add(vrg);
                 }
+            }
+            //last row
+            rowStartLocation.X = margin;
+            rowStartLocation.Y = margin + row * (queryRegion.Height + margin);
+            int left = count % col;
+            for (int j = 0; j < left; ++j)
+            {
+                Point myLocation = new Point();
+                myLocation.X = rowStartLocation.X + j * (queryRegion.Width + margin);
+                myLocation.Y = rowStartLocation.Y;
+                ViewerResultGraph vrg = new ViewerResultGraph(index, drawer, myLocation, vqg, matches[index]);
+                index += 1;
+                m_AllResultGraph.Add(vrg);
             }
         }
 
