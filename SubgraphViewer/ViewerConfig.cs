@@ -19,8 +19,8 @@ namespace SubgraphViewer
         public static string FontName = "黑体";
         public static Color BrushColor = Color.Black;
 
-        public static int QueryResultWidth = 1000;
-        public static int QueryResultHeight = 1200;
+        public static int QueryResultWidth = 800;
+        public static int QueryResultHeight = 500;
         public static int QueryResultMargin = 50;
     }
 

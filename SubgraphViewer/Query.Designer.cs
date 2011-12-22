@@ -30,6 +30,7 @@
         {
             this.panel_left = new System.Windows.Forms.Panel();
             this.panel_bottom = new System.Windows.Forms.Panel();
+            this.buttonMatch = new System.Windows.Forms.Button();
             this.textBoxMaxMatchNum = new System.Windows.Forms.TextBox();
             this.label7 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
@@ -46,7 +47,6 @@
             this.label2 = new System.Windows.Forms.Label();
             this.textBoxStartVertex = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
-            this.buttonMatch = new System.Windows.Forms.Button();
             this.panel_bottom.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -88,9 +88,19 @@
             this.panel_bottom.Size = new System.Drawing.Size(544, 165);
             this.panel_bottom.TabIndex = 1;
             // 
+            // buttonMatch
+            // 
+            this.buttonMatch.Location = new System.Drawing.Point(0, -1);
+            this.buttonMatch.Name = "buttonMatch";
+            this.buttonMatch.Size = new System.Drawing.Size(544, 23);
+            this.buttonMatch.TabIndex = 2;
+            this.buttonMatch.Text = "Match!";
+            this.buttonMatch.UseVisualStyleBackColor = true;
+            this.buttonMatch.Click += new System.EventHandler(this.buttonMatch_Click);
+            // 
             // textBoxMaxMatchNum
             // 
-            this.textBoxMaxMatchNum.Location = new System.Drawing.Point(85, 129);
+            this.textBoxMaxMatchNum.Location = new System.Drawing.Point(85, 112);
             this.textBoxMaxMatchNum.Name = "textBoxMaxMatchNum";
             this.textBoxMaxMatchNum.Size = new System.Drawing.Size(86, 21);
             this.textBoxMaxMatchNum.TabIndex = 15;
@@ -98,7 +108,7 @@
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(6, 135);
+            this.label7.Location = new System.Drawing.Point(5, 115);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(71, 12);
             this.label7.TabIndex = 14;
@@ -122,7 +132,7 @@
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(6, 66);
+            this.button2.Location = new System.Drawing.Point(3, 48);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(63, 23);
             this.button2.TabIndex = 11;
@@ -192,7 +202,7 @@
             // 
             // textBoxEndVertex
             // 
-            this.textBoxEndVertex.Location = new System.Drawing.Point(85, 86);
+            this.textBoxEndVertex.Location = new System.Drawing.Point(85, 71);
             this.textBoxEndVertex.Name = "textBoxEndVertex";
             this.textBoxEndVertex.Size = new System.Drawing.Size(86, 21);
             this.textBoxEndVertex.TabIndex = 3;
@@ -200,7 +210,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(4, 95);
+            this.label2.Location = new System.Drawing.Point(5, 80);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(65, 12);
             this.label2.TabIndex = 2;
@@ -208,7 +218,7 @@
             // 
             // textBoxStartVertex
             // 
-            this.textBoxStartVertex.Location = new System.Drawing.Point(85, 45);
+            this.textBoxStartVertex.Location = new System.Drawing.Point(85, 30);
             this.textBoxStartVertex.Name = "textBoxStartVertex";
             this.textBoxStartVertex.Size = new System.Drawing.Size(86, 21);
             this.textBoxStartVertex.TabIndex = 1;
@@ -216,21 +226,11 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(2, 45);
+            this.label1.Location = new System.Drawing.Point(2, 33);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(77, 12);
             this.label1.TabIndex = 0;
             this.label1.Text = "start_vertex";
-            // 
-            // buttonMatch
-            // 
-            this.buttonMatch.Location = new System.Drawing.Point(0, -1);
-            this.buttonMatch.Name = "buttonMatch";
-            this.buttonMatch.Size = new System.Drawing.Size(544, 23);
-            this.buttonMatch.TabIndex = 2;
-            this.buttonMatch.Text = "Match!";
-            this.buttonMatch.UseVisualStyleBackColor = true;
-            this.buttonMatch.Click += new System.EventHandler(this.buttonMatch_Click);
             // 
             // Query
             // 

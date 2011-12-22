@@ -18,6 +18,7 @@ namespace SubgraphViewer
         private ViewerQueryGraph m_ViewerGraph;
         private ToolBox m_ToolBox;
         private HashSet<string> m_LoadedLabelIndex;
+        private Rectangle m_ClientRegion;
         public Query()
         {
             InitializeComponent();
@@ -29,20 +30,24 @@ namespace SubgraphViewer
             TrinityConfig.CurrentRunningMode = RunningMode.Client;
             //List<string> hostNameList = Global.BlackBoard.HostNameList;
             m_LoadedLabelIndex = new HashSet<string>();
-
-            m_ViewerGraph = SampleQueryGraph();
+            //m_ViewerGraph = SampleQueryGraph();
         }
 
         private void IntializeFormLayout()
         {
             this.Text = "QueryPanel";
-            this.Height = ViewerConfig.QueryPanelHeight;
-            this.Width = ViewerConfig.QueryPanleWidth;
+            this.ClientSize = new Size(ViewerConfig.QueryPanleWidth, ViewerConfig.QueryPanelHeight);
+            this.FormBorderStyle = FormBorderStyle.Fixed3D;
             //MessageBox.Show(this.BackColor.R.ToString() + " " + this.BackColor.G.ToString() + " " + this.BackColor.B.ToString());
             panel_left.Width = ViewerConfig.LeftPanelWidth;
             panel_bottom.Height = ViewerConfig.BottomPanelHeight;
             buttonMatch.Width = panel_bottom.Width;
             buttonMatch.Height = 20;
+            m_ClientRegion = new Rectangle();
+            m_ClientRegion.X = panel_left.Width + (int)ViewerConfig.NodeRadius;
+            m_ClientRegion.Y = (int)ViewerConfig.NodeRadius;
+            m_ClientRegion.Width = ViewerConfig.QueryPanleWidth - panel_left.Width - 2 * (int)ViewerConfig.NodeRadius;
+            m_ClientRegion.Height = ViewerConfig.QueryPanelHeight - panel_bottom.Height - 2 * (int)ViewerConfig.NodeRadius;
             //buttonMatch.Left = panel_bottom.Location.X;
             //buttonMatch.Top = panel_bottom.Location.Y - buttonMatch.Height;
         }
@@ -54,10 +59,10 @@ namespace SubgraphViewer
 
         private void Query_MouseDown(object sender, MouseEventArgs e)
         {
-            //textBox_StartVertex.Text = e.X.ToString() + " " + e.Y.ToString();
+            //textBoxStartVertex.Text = e.X.ToString() + " " + e.Y.ToString();
             if (m_ToolBox.SelectedItem != null && m_ToolBox.SelectedItem.Name == "node")
             {
-                if (m_ViewerGraph.AddNode(e.Location) == false)
+                if (m_ClientRegion.Contains(e.Location) == false || m_ViewerGraph.AddNode(e.Location) == false)
                 {
                     MessageBox.Show("please select another proper location!", "Hint");
                 }
@@ -74,6 +79,8 @@ namespace SubgraphViewer
         private void Query_Paint(object sender, PaintEventArgs e)
         {
             m_ViewerGraph.Draw();
+            //Pen p = new Pen(Color.Black);
+            //e.Graphics.DrawRectangle(p, m_ClientRegion);
         }
 
         private void panel_left_Paint(object sender, PaintEventArgs e)
@@ -83,6 +90,7 @@ namespace SubgraphViewer
 
         private void panel_left_MouseDown(object sender, MouseEventArgs e)
         {
+            //textBoxStartVertex.Text = e.X.ToString() + " " + e.Y.ToString();
             m_ToolBox.SetSelectedItem(e.Location);
             panel_left.Invalidate();
         }
