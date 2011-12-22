@@ -13,6 +13,7 @@ namespace SubgraphViewer
     partial class QueryResult : Form
     {
         private ViewerResult m_ViewerResult;
+        private SubgraphViewerDrawer m_Drawer;
         public QueryResult()
         {
             InitializeComponent();
@@ -23,18 +24,24 @@ namespace SubgraphViewer
         {
             InitializeComponent();
             InitializeFormLayout();
-            SubgraphViewerDrawer drawer = new SubgraphViewerDrawer(this.CreateGraphics());
-            m_ViewerResult = new ViewerResult(drawer, matches, vqg);
+            m_Drawer = new SubgraphViewerDrawer(this.CreateGraphics());
+            m_ViewerResult = new ViewerResult(m_Drawer, matches, vqg);
         }
 
         private void InitializeFormLayout()
         {
-            this.Width = ViewerConfig.QueryResultWidth;
-            this.Height = ViewerConfig.QueryResultHeight;
+            //this.Width = ViewerConfig.QueryResultWidth;
+            //this.Height = ViewerConfig.QueryResultHeight;
+            this.ClientSize = new Size(ViewerConfig.QueryResultWidth, ViewerConfig.QueryResultHeight);
+            //this.FormBorderStyle = FormBorderStyle.Fixed3D;
+            this.AutoScroll = true;
+            this.AutoScrollMinSize = new Size(ViewerConfig.QueryPanleWidth, 20000);
         }
 
         private void QueryResult_Paint(object sender, PaintEventArgs e)
         {
+            m_Drawer.Graphics = e.Graphics;
+            m_Drawer.TranslateTransform(this.AutoScrollPosition.X, this.AutoScrollPosition.Y);
             m_ViewerResult.Draw();
         }
 

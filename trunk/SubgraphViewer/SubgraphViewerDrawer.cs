@@ -23,6 +23,11 @@ namespace SubgraphViewer
         private Font m_Font;
         private Brush m_Brush;
         AdjustableArrowCap m_LineCap;
+
+        public Graphics Graphics
+        {
+            set { m_Graphics = value; }
+        }
         public SubgraphViewerDrawer(Graphics g)
         {
             m_Graphics = g;
@@ -58,6 +63,11 @@ namespace SubgraphViewer
         public void DrawRectangle(Rectangle rc)
         {
             m_Graphics.DrawRectangle(m_LinePen, rc);
+        }
+
+        public void TranslateTransform(int x, int y)
+        {
+            m_Graphics.TranslateTransform(x, y);
         }
     }
 }
