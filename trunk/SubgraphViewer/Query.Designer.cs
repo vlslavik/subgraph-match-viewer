@@ -45,6 +45,7 @@
             this.label2 = new System.Windows.Forms.Label();
             this.textBoxStartVertex = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
+            this.buttonClear = new System.Windows.Forms.Button();
             this.panel_bottom.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -63,6 +64,7 @@
             // panel_bottom
             // 
             this.panel_bottom.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel_bottom.Controls.Add(this.buttonClear);
             this.panel_bottom.Controls.Add(this.buttonMatch);
             this.panel_bottom.Controls.Add(this.textBoxMaxMatchNum);
             this.panel_bottom.Controls.Add(this.label7);
@@ -113,7 +115,7 @@
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(413, 89);
+            this.label6.Location = new System.Drawing.Point(398, 106);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(35, 12);
             this.label6.TabIndex = 13;
@@ -131,7 +133,7 @@
             // 
             // textBoxVertexLabel
             // 
-            this.textBoxVertexLabel.Location = new System.Drawing.Point(463, 80);
+            this.textBoxVertexLabel.Location = new System.Drawing.Point(463, 97);
             this.textBoxVertexLabel.Name = "textBoxVertexLabel";
             this.textBoxVertexLabel.Size = new System.Drawing.Size(76, 21);
             this.textBoxVertexLabel.TabIndex = 10;
@@ -145,7 +147,7 @@
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(400, 115);
+            this.button1.Location = new System.Drawing.Point(400, 71);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(69, 23);
             this.button1.TabIndex = 8;
@@ -212,6 +214,16 @@
             this.label1.TabIndex = 0;
             this.label1.Text = "start_vertex";
             // 
+            // buttonClear
+            // 
+            this.buttonClear.Location = new System.Drawing.Point(0, 137);
+            this.buttonClear.Name = "buttonClear";
+            this.buttonClear.Size = new System.Drawing.Size(543, 23);
+            this.buttonClear.TabIndex = 16;
+            this.buttonClear.Text = "clear";
+            this.buttonClear.UseVisualStyleBackColor = true;
+            this.buttonClear.Click += new System.EventHandler(this.buttonClear_Click);
+            // 
             // Query
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -221,6 +233,7 @@
             this.Controls.Add(this.panel_left);
             this.Name = "Query";
             this.Text = "Form1";
+            this.Load += new System.EventHandler(this.Query_Load);
             this.Paint += new System.Windows.Forms.PaintEventHandler(this.Query_Paint);
             this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.Query_MouseDown);
             this.MouseMove += new System.Windows.Forms.MouseEventHandler(this.Query_MouseMove);
@@ -249,6 +262,7 @@
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.TextBox textBoxMaxMatchNum;
         private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.Button buttonClear;
     }
 }
 
