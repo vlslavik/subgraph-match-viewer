@@ -11,6 +11,7 @@ using Trinity.GraphDB.Query;
 using Trinity.Configuration;
 using Trinity.Core;
 using Trinity.Networking;
+using System.Threading;
 
 namespace SubgraphViewer
 {
@@ -20,24 +21,42 @@ namespace SubgraphViewer
         private ToolBox m_ToolBox;
         private bool m_IndexLoaded;
         private Rectangle m_ClientRegion;
+        private SubgraphViewerDrawer m_GraphDrawer;
         public Query()
         {
             InitializeComponent();
             IntializeFormLayout();
-            SubgraphViewerDrawer graphDrawer = new SubgraphViewerDrawer(this.CreateGraphics());
+            
+            m_GraphDrawer = new SubgraphViewerDrawer(this.CreateGraphics());
             SubgraphViewerDrawer toolBoxDrawer = new SubgraphViewerDrawer(panel_left.CreateGraphics());
-            m_ViewerGraph = new ViewerQueryGraph(graphDrawer);
+            m_ViewerGraph = new ViewerQueryGraph(m_GraphDrawer);
             m_ToolBox = new ToolBox(toolBoxDrawer);
-            TrinityConfig.CurrentRunningMode = RunningMode.Client;
             m_IndexLoaded = false;
-            ConnectServer();
+            
             //m_ViewerGraph = SampleQueryGraph();
+            
         }
 
 
         private void ConnectServer()
         {
-            List<string> hostNameList = BlackboardClient.HostNameList;
+            Thread t = new Thread(new ThreadStart(ViewerConfig.ConfigureServer));
+            t.Start();
+            SplashForm sf = new SplashForm("connect to servers...");
+            sf.Show();
+            DateTime startTime = DateTime.Now;
+            while (t.IsAlive == true)
+            {
+                if (DateTime.Now.Subtract(startTime).TotalSeconds >= 6)
+                {
+                    t.Abort();
+                    break;
+                }
+                sf.Update();
+                Thread.Sleep(100);
+            }
+            sf.Close();
+            
         }
 
         private void IntializeFormLayout()
@@ -45,11 +64,14 @@ namespace SubgraphViewer
             this.Text = "QueryPanel";
             this.ClientSize = new Size(ViewerConfig.QueryPanleWidth, ViewerConfig.QueryPanelHeight);
             this.FormBorderStyle = FormBorderStyle.Fixed3D;
+            this.StartPosition = FormStartPosition.CenterScreen;
             //MessageBox.Show(this.BackColor.R.ToString() + " " + this.BackColor.G.ToString() + " " + this.BackColor.B.ToString());
             panel_left.Width = ViewerConfig.LeftPanelWidth;
             panel_bottom.Height = ViewerConfig.BottomPanelHeight;
             buttonMatch.Width = panel_bottom.Width;
             buttonMatch.Height = 20;
+            buttonClear.Width = panel_bottom.Width;
+            buttonClear.Height = 20;
             m_ClientRegion = new Rectangle();
             m_ClientRegion.X = panel_left.Width + (int)ViewerConfig.NodeRadius;
             m_ClientRegion.Y = (int)ViewerConfig.NodeRadius;
@@ -73,6 +95,12 @@ namespace SubgraphViewer
                 {
                     MessageBox.Show("please select another proper location!", "Hint");
                 }
+                UpdateLabelList();
+                this.Invalidate();
+            }
+            else if (m_ToolBox.SelectedItem != null && m_ToolBox.SelectedItem.Name == "eraser")
+            {
+                m_ViewerGraph.Remove(new Rectangle(e.Location.X, e.Location.Y, ViewerConfig.MouseEraserWidth, ViewerConfig.MouseEraserHeight));
                 UpdateLabelList();
                 this.Invalidate();
             }
@@ -104,6 +132,12 @@ namespace SubgraphViewer
 
         private void buttonMatch_Click(object sender, EventArgs e)
         {
+            string msg;
+            if (m_ViewerGraph.Valid(out msg) == false)
+            {
+                MessageBox.Show(msg);
+                return;
+            }
             QueryGraph qg = m_ViewerGraph.GetLogicQueryGraph();
             int maxMatchNum = 1024;
             try
@@ -118,13 +152,22 @@ namespace SubgraphViewer
                 maxMatchNum = 1024;
             }
             buttonMatch.Enabled = false;
-            if (m_IndexLoaded == false)
+            List<Match> matches = new List<Match>();
+            try
             {
-                SubGraphCoreMatch.LoadLabelDictionaryIndex();
-                m_IndexLoaded = true;
+                if (m_IndexLoaded == false)
+                {
+                    SubGraphCoreMatch.LoadLabelDictionaryIndex();
+                    m_IndexLoaded = true;
+                }
+                matches = SubGraphCoreMatch.OnLineQuery(qg, maxMatchNum);
             }
-            List<Match> matches = SubGraphCoreMatch.OnLineQuery(qg, maxMatchNum);
-            //List<Match> matches = SampleMatches(qg);
+            catch (System.Exception ex)
+            {
+                buttonMatch.Enabled = true;
+                return;
+            }
+            //matches = SampleMatches(qg);
             buttonMatch.Enabled = true;
             QueryResult qr = new QueryResult(m_ViewerGraph, matches);
             qr.Show();
@@ -204,6 +247,34 @@ namespace SubgraphViewer
             {
             	
             }
+        }
+
+        private void Query_Load(object sender, EventArgs e)
+        {
+            this.Hide();
+            ConnectServer();
+            if (ViewerConfig.HostNameList == null)
+            {
+                MessageBox.Show("can not connect to servers");
+            }
+            this.Visible = true;
+        }
+
+        private void Clear()
+        {
+            m_ViewerGraph = new ViewerQueryGraph(m_GraphDrawer);
+            textBoxEndVertex.Text = "";
+            textBoxMaxMatchNum.Text = "";
+            textBoxStartVertex.Text = "";
+            textBoxVertexID.Text = "";
+            textBoxVertexLabel.Text = "";
+        }
+
+        private void buttonClear_Click(object sender, EventArgs e)
+        {
+            Clear();
+            this.Invalidate();
+            UpdateLabelList();
         }
 
 

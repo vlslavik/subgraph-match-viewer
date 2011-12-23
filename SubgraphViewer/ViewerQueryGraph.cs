@@ -135,8 +135,6 @@ namespace SubgraphViewer
         private HashSet<int> m_OutLinkList;
         private HashSet<int> m_InLinkList;
         private string m_Label;
-        private long m_MatchID;
-
 
         public string Label
         {
@@ -202,7 +200,12 @@ namespace SubgraphViewer
 
         public bool Overlap(Rectangle rec)
         {
-            return false;
+            int radius = (int)ViewerConfig.NodeRadius;
+            Rectangle rec2 = new Rectangle(m_Center.X - radius, m_Center.Y - radius, 2 * radius, 2 * radius);
+            return !(rec2.Left > rec.Right
+                || rec2.Right < rec.Left
+                || rec2.Top > rec.Bottom
+                || rec2.Bottom < rec.Top);
         }
 
         public bool Overlap(Point p, double radius)
@@ -247,6 +250,17 @@ namespace SubgraphViewer
         {
             m_Center.X += transferV.X;
             m_Center.Y += transferV.Y;
+        }
+
+        public bool Valid(out string msg)
+        {
+            msg = "ok";
+            if (m_Label == null)
+            {
+                msg = "vertex " + m_ID + " label not set";
+                return false;
+            }
+            return true;
         }
     }
 
@@ -351,13 +365,19 @@ namespace SubgraphViewer
 
         public void Remove(Rectangle removeArea)
         {
+            int nodeID = -1;
             foreach (KeyValuePair<int, ViewerQueryNode> kv in m_AllNodes)
             {
                 if (kv.Value.Overlap(removeArea) == true)
                 {
-                    RemoveNode(kv.Key);
-                    return;
+                    nodeID = kv.Key;
+                    break;
                 }
+            }
+            if (nodeID != -1)
+            {
+                RemoveNode(nodeID);
+                return;
             }
             List<ViewerEdge> allEdges = GetAllEdges();
             foreach (ViewerEdge vqe in allEdges)
@@ -392,11 +412,13 @@ namespace SubgraphViewer
         private void RemoveNode(int id)
         {
             ViewerQueryNode removeNode = m_AllNodes[id];
-            foreach (int tid in removeNode.OutLinkList)
+            List<int> removeList = removeNode.OutLinkList.ToList();
+            foreach (int tid in removeList)
             {
                 RemoveEdge(id, tid);
             }
-            foreach (int sid in removeNode.InLinkList)
+            removeList = removeNode.InLinkList.ToList();
+            foreach (int sid in removeList)
             {
                 RemoveEdge(sid, id);
             }
@@ -404,7 +426,7 @@ namespace SubgraphViewer
             UpdateRegion();
         }
 
-        public void RemoveEdge(int sid, int tid)
+        private void RemoveEdge(int sid, int tid)
         {
             ViewerQueryNode startNode = m_AllNodes[sid];
             ViewerQueryNode endNode = m_AllNodes[tid];
@@ -428,10 +450,10 @@ namespace SubgraphViewer
                 vqe.Draw(m_Drawer);
             }
 
-            if (m_Region.X != -1)
-            {
-                m_Drawer.DrawRectangle(m_Region);
-            }
+            //if (m_Region.X != -1)
+            //{
+            //    m_Drawer.DrawRectangle(m_Region);
+            //}
             
 
         }
@@ -460,6 +482,19 @@ namespace SubgraphViewer
                 res.Add(m_AllNodes[idList[i]]);
             }
             return res;
+        }
+
+        public bool Valid(out string msg)
+        {
+            msg = "ok";
+            foreach (ViewerQueryNode vqn in m_AllNodes.Values)
+            {
+                if (vqn.Valid(out msg) == false)
+                {
+                    return false;
+                }
+            }
+            return true;
         }
     }
 }
