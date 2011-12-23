@@ -34,12 +34,10 @@
             this.textBoxMaxMatchNum = new System.Windows.Forms.TextBox();
             this.label7 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
-            this.textBoxLabelName = new System.Windows.Forms.TextBox();
             this.button2 = new System.Windows.Forms.Button();
             this.textBoxVertexLabel = new System.Windows.Forms.TextBox();
             this.textBoxVertexID = new System.Windows.Forms.TextBox();
             this.button1 = new System.Windows.Forms.Button();
-            this.label5 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.listBoxLabelList = new System.Windows.Forms.ListBox();
@@ -69,12 +67,10 @@
             this.panel_bottom.Controls.Add(this.textBoxMaxMatchNum);
             this.panel_bottom.Controls.Add(this.label7);
             this.panel_bottom.Controls.Add(this.label6);
-            this.panel_bottom.Controls.Add(this.textBoxLabelName);
             this.panel_bottom.Controls.Add(this.button2);
             this.panel_bottom.Controls.Add(this.textBoxVertexLabel);
             this.panel_bottom.Controls.Add(this.textBoxVertexID);
             this.panel_bottom.Controls.Add(this.button1);
-            this.panel_bottom.Controls.Add(this.label5);
             this.panel_bottom.Controls.Add(this.label4);
             this.panel_bottom.Controls.Add(this.label3);
             this.panel_bottom.Controls.Add(this.listBoxLabelList);
@@ -117,18 +113,11 @@
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(415, 105);
+            this.label6.Location = new System.Drawing.Point(413, 89);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(35, 12);
             this.label6.TabIndex = 13;
             this.label6.Text = "label";
-            // 
-            // textBoxLabelName
-            // 
-            this.textBoxLabelName.Location = new System.Drawing.Point(464, 39);
-            this.textBoxLabelName.Name = "textBoxLabelName";
-            this.textBoxLabelName.Size = new System.Drawing.Size(80, 21);
-            this.textBoxLabelName.TabIndex = 12;
             // 
             // button2
             // 
@@ -142,41 +131,32 @@
             // 
             // textBoxVertexLabel
             // 
-            this.textBoxVertexLabel.Location = new System.Drawing.Point(464, 96);
+            this.textBoxVertexLabel.Location = new System.Drawing.Point(463, 80);
             this.textBoxVertexLabel.Name = "textBoxVertexLabel";
             this.textBoxVertexLabel.Size = new System.Drawing.Size(76, 21);
             this.textBoxVertexLabel.TabIndex = 10;
             // 
             // textBoxVertexID
             // 
-            this.textBoxVertexID.Location = new System.Drawing.Point(462, 66);
+            this.textBoxVertexID.Location = new System.Drawing.Point(463, 48);
             this.textBoxVertexID.Name = "textBoxVertexID";
             this.textBoxVertexID.Size = new System.Drawing.Size(76, 21);
             this.textBoxVertexID.TabIndex = 9;
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(395, 127);
+            this.button1.Location = new System.Drawing.Point(400, 115);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(69, 23);
             this.button1.TabIndex = 8;
-            this.button1.Text = "add_label";
+            this.button1.Text = "set_label";
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
-            // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(393, 45);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(65, 12);
-            this.label5.TabIndex = 7;
-            this.label5.Text = "label_name";
             // 
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(397, 71);
+            this.label4.Location = new System.Drawing.Point(398, 53);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(59, 12);
             this.label4.TabIndex = 6;
@@ -261,12 +241,10 @@
         private System.Windows.Forms.TextBox textBoxVertexLabel;
         private System.Windows.Forms.TextBox textBoxVertexID;
         private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.ListBox listBoxLabelList;
         private System.Windows.Forms.Button button2;
-        private System.Windows.Forms.TextBox textBoxLabelName;
         private System.Windows.Forms.Button buttonMatch;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.TextBox textBoxMaxMatchNum;

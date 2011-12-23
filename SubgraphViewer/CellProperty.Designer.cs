@@ -1,6 +1,6 @@
 ﻿namespace SubgraphViewer
 {
-    partial class QueryResult
+    partial class CellProperty
     {
         /// <summary>
         /// Required designer variable.
@@ -28,22 +28,34 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
-            // QueryResult
+            // dataGridView1
+            // 
+            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView1.Location = new System.Drawing.Point(21, 12);
+            this.dataGridView1.Name = "dataGridView1";
+            this.dataGridView1.RowTemplate.Height = 23;
+            this.dataGridView1.Size = new System.Drawing.Size(229, 130);
+            this.dataGridView1.TabIndex = 0;
+            // 
+            // CellProperty
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.AutoScroll = true;
             this.ClientSize = new System.Drawing.Size(284, 262);
-            this.Name = "QueryResult";
-            this.Text = "QueryResult";
-            this.Paint += new System.Windows.Forms.PaintEventHandler(this.QueryResult_Paint);
-            this.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.QueryResult_MouseDoubleClick);
+            this.Controls.Add(this.dataGridView1);
+            this.Name = "CellProperty";
+            this.Text = "CellProperty";
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.ResumeLayout(false);
 
         }
 
         #endregion
+
+        private System.Windows.Forms.DataGridView dataGridView1;
     }
 }

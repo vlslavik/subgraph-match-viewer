@@ -6,6 +6,7 @@ using System.Drawing;
 using Trinity.GraphDB;
 using Trinity.Core.Lib;
 using Trinity.GraphDB.Query.Subgraph;
+using Trinity.GraphDB.Query;
 
 namespace SubgraphViewer
 {
@@ -227,11 +228,19 @@ namespace SubgraphViewer
             //drawer.DrawEcllipse(location, 32, 32);
         }
 
-        public Cell ToCell(string labelName)
+        public ISubgraphMatchCell ToCell()
         {
-            Cell c = new Cell();
-            c[labelName] = new XString(m_Label);
-            return c;
+            try
+            {
+                SimpleSubgraphMatchCell c = new SimpleSubgraphMatchCell(Int64ID.NewID());
+                c.SetLabel(BitConverter.GetBytes(int.Parse(m_Label)));
+                return c;
+            }
+            catch (FormatException e)
+            {
+                throw e;
+            }
+            
         }
 
         public void Transfer(Point transferV)
@@ -246,15 +255,8 @@ namespace SubgraphViewer
         private Dictionary<int, ViewerQueryNode> m_AllNodes;
         private int m_IDIndex = 0;
         private ISubGraphViewerDrawer m_Drawer;
-        private string m_LabelName;
         private Rectangle m_Region;
         private ViewerGraphToLogicQueryTransfer m_Transfer;
-
-        public string LabelName
-        {
-            get { return m_LabelName; }
-            set { m_LabelName = value; }
-        }
 
         public List<ViewerQueryNode> NodesList
         {
@@ -275,7 +277,6 @@ namespace SubgraphViewer
         {
             m_Drawer = drawer;
             m_AllNodes = new Dictionary<int, ViewerQueryNode>();
-            m_LabelName = null;
             m_Transfer = new ViewerGraphToLogicQueryTransfer(this);
             m_Region = new Rectangle(-1, -1, 0, 0);
         }

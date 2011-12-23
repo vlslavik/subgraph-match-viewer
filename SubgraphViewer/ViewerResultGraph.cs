@@ -10,6 +10,10 @@ namespace SubgraphViewer
     class ViewerResultNode : ViewerQueryNode
     {
         private long m_MatchID;
+        public long MatchID
+        {
+            get { return m_MatchID; }
+        }
         public ViewerResultNode(ViewerQueryNode vqn, long matchID):base(vqn)
         {
             m_MatchID = matchID;
@@ -77,6 +81,23 @@ namespace SubgraphViewer
                     }
                 }
             }
+        }
+
+        public List<ViewerResultNode> GetSortedIDNodeList()
+        {
+            List<ViewerResultNode> res = new List<ViewerResultNode>();
+            List<int> idList = new List<int>(m_AllNodes.Keys);
+            idList.Sort();
+            for (int i = 0; i < idList.Count; ++i)
+            {
+                res.Add(m_AllNodes[idList[i]]);
+            }
+            return res;
+        }
+
+        public bool Contains(Point p)
+        {
+            return m_Region.Contains(p);
         }
 
         public void Draw()

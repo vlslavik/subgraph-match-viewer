@@ -14,10 +14,12 @@ namespace SubgraphViewer
     {
         private ViewerResult m_ViewerResult;
         private SubgraphViewerDrawer m_Drawer;
+        private CellProperty m_CellPropertyForm;
         public QueryResult()
         {
             InitializeComponent();
             InitializeFormLayout();
+            m_CellPropertyForm = null;
         }
 
         public QueryResult(ViewerQueryGraph vqg, List<Match> matches)
@@ -43,6 +45,16 @@ namespace SubgraphViewer
             m_Drawer.Graphics = e.Graphics;
             m_Drawer.TranslateTransform(this.AutoScrollPosition.X, this.AutoScrollPosition.Y);
             m_ViewerResult.Draw();
+        }
+
+        private void QueryResult_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            ViewerResultGraph vrg = m_ViewerResult.GetOverlapGraph(e.Location);
+            if(vrg != null)
+            {
+                m_CellPropertyForm = new CellProperty(vrg);
+                m_CellPropertyForm.Show();
+            }
         }
 
 

@@ -55,6 +55,18 @@ namespace SubgraphViewer
             }
         }
 
+        public ViewerResultGraph GetOverlapGraph(Point p)
+        {
+            foreach (ViewerResultGraph vrg in m_AllResultGraph)
+            {
+                if (vrg.Contains(p) == true)
+                {
+                    return vrg;
+                }
+            }
+            return null;
+        }
+
         public void Draw()
         {
             foreach (ViewerResultGraph vrg in m_AllResultGraph)
