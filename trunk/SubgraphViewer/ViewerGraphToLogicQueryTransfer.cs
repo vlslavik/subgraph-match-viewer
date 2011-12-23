@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using Trinity.GraphDB.Query.Subgraph;
 using Trinity.GraphDB;
+using Trinity.GraphDB.Query;
 
 namespace SubgraphViewer
 {
@@ -23,11 +24,10 @@ namespace SubgraphViewer
         public QueryGraph GetLogicQueryGraph()
         {
             QueryGraph qg = new QueryGraph();
-            string labelName = m_ViewerQueryGraph.LabelName;
             //create nodes
             foreach (ViewerQueryNode vqn in m_ViewerQueryGraph.NodesList)
             {
-                Cell c = vqn.ToCell(labelName);
+                ISubgraphMatchCell c = vqn.ToCell();
                 qg.AddCell(c);
                 m_Viewer2LogicDic.Add(vqn.ID, c.CellID);
                 m_Logic2ViewerDic.Add(c.CellID, vqn.ID);
@@ -35,11 +35,12 @@ namespace SubgraphViewer
             //create edges
             foreach (ViewerQueryNode vqn in m_ViewerQueryGraph.NodesList)
             {
-                Cell c1 = qg.LoadCell(m_Viewer2LogicDic[vqn.ID]);
+                ISubgraphMatchCell c1 = qg.LoadCell(m_Viewer2LogicDic[vqn.ID]);
                 foreach (int id in vqn.OutLinkList)
                 {
-                    Cell c2 = qg.LoadCell(m_Viewer2LogicDic[id]);
-                    Cell.LinkCellPair(c1, c2);
+                    ISubgraphMatchCell c2 = qg.LoadCell(m_Viewer2LogicDic[id]);
+                    c1.TargetCellSet.Add(c2.CellID);
+                    c2.SourceCellSet.Add(c1.CellID);
                 }
             }
             return qg;

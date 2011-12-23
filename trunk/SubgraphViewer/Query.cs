@@ -10,6 +10,7 @@ using Trinity.GraphDB.Query.Subgraph;
 using Trinity.GraphDB.Query;
 using Trinity.Configuration;
 using Trinity.Core;
+using Trinity.Networking;
 
 namespace SubgraphViewer
 {
@@ -17,7 +18,7 @@ namespace SubgraphViewer
     {
         private ViewerQueryGraph m_ViewerGraph;
         private ToolBox m_ToolBox;
-        private HashSet<string> m_LoadedLabelIndex;
+        private bool m_IndexLoaded;
         private Rectangle m_ClientRegion;
         public Query()
         {
@@ -28,9 +29,15 @@ namespace SubgraphViewer
             m_ViewerGraph = new ViewerQueryGraph(graphDrawer);
             m_ToolBox = new ToolBox(toolBoxDrawer);
             TrinityConfig.CurrentRunningMode = RunningMode.Client;
-            //List<string> hostNameList = Global.BlackBoard.HostNameList;
-            m_LoadedLabelIndex = new HashSet<string>();
+            m_IndexLoaded = false;
+            ConnectServer();
             //m_ViewerGraph = SampleQueryGraph();
+        }
+
+
+        private void ConnectServer()
+        {
+            List<string> hostNameList = BlackboardClient.HostNameList;
         }
 
         private void IntializeFormLayout()
@@ -97,12 +104,6 @@ namespace SubgraphViewer
 
         private void buttonMatch_Click(object sender, EventArgs e)
         {
-            if (textBoxLabelName.Text.Trim() == "")
-            {
-                MessageBox.Show("please set the label name first", "Hint");
-                return;
-            }
-            m_ViewerGraph.LabelName = textBoxLabelName.Text.Trim();
             QueryGraph qg = m_ViewerGraph.GetLogicQueryGraph();
             int maxMatchNum = 1024;
             try
@@ -117,13 +118,13 @@ namespace SubgraphViewer
                 maxMatchNum = 1024;
             }
             buttonMatch.Enabled = false;
-            //if (m_LoadedLabelIndex.Contains(m_ViewerGraph.LabelName) == false)
-            //{
-            //    SubGraphCoreMatch.LoadLabelDictionaryIndex(m_ViewerGraph.LabelName);
-            //    m_LoadedLabelIndex.Add(m_ViewerGraph.LabelName);
-            //}
-            //List<Match> matches = SubGraphCoreMatch.OnLineQuery(qg, m_ViewerGraph.LabelName, maxMatchNum);
-            List<Match> matches = SampleMatches(qg);
+            if (m_IndexLoaded == false)
+            {
+                SubGraphCoreMatch.LoadLabelDictionaryIndex();
+                m_IndexLoaded = true;
+            }
+            List<Match> matches = SubGraphCoreMatch.OnLineQuery(qg, maxMatchNum);
+            //List<Match> matches = SampleMatches(qg);
             buttonMatch.Enabled = true;
             QueryResult qr = new QueryResult(m_ViewerGraph, matches);
             qr.Show();
@@ -156,12 +157,11 @@ namespace SubgraphViewer
             vqg.AddNode(p1);
             vqg.AddNode(p2);
             vqg.AddNode(p3);
-            vqg.SetLabel(1, "sun");
-            vqg.SetLabel(2, "sun");
-            vqg.SetLabel(3, "sun");
+            vqg.SetLabel(1, "1");
+            vqg.SetLabel(2, "1");
+            vqg.SetLabel(3, "1");
             vqg.AddEdge(1, 2);
             vqg.AddEdge(1, 3);
-            textBoxLabelName.Text = "name";
             UpdateLabelList();
             return vqg;
         }

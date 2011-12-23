@@ -5,7 +5,7 @@
     <entry name="ReadonlyDatabase">false</entry>
     <entry name="ReadSlaveListFromConf">false</entry>
     <entry name="ExperimentalFeatureOn">false</entry>
-    <entry name="CompatibleMessageMode">true</entry>
+    <entry name="IsDebug">false</entry>
     <entry name="IsStandaloneServer">false</entry>
   </section>
   <section name="Network">
@@ -18,7 +18,7 @@
     <entry name="ServerMaxAcceptOps">512</entry>
   </section>
   <section name="Protocol">
-    <entry name="BlackboardServer">10.131.247.38</entry>
+    <entry name="BlackboardServer">10.131.246.188</entry>
     <entry name="BlackboardPort">7726</entry>
     <entry name="RGraphPort">8239</entry>
     <entry name="SlavePort">5304</entry>
@@ -26,12 +26,14 @@
     <entry name="AggregatorPort">7304</entry>
   </section>
   <section name="Slaves" />
-  <section name="QueryProxies" />
+  <section name="QueryProxies">
+    <entry name="Proxy">10.131.246.188:7304</entry>
+  </section>
   <section name="Storage">
     <entry name="MemoryPoolSize">268435456</entry>
     <entry name="MemoryTrunkIncrementSize">33554432</entry>
     <entry name="IndexMemoryTrunkSize">33554432</entry>
-    <entry name="StorageRoot">D:\实验室 project\Trinity\SubgraphViewer\SubgraphViewer\bin\x64\Debug\storage\</entry>
+    <entry name="StorageRoot">D:\zhaosun\workspace\subgraph-new\bin\storage\</entry>
   </section>
   <section name="Transaction">
     <entry name="NonTransactional">true</entry>
@@ -43,8 +45,8 @@
     <entry name="QueryAggregatorOn">false</entry>
     <entry name="CellCacheOn">false</entry>
     <entry name="ReadonlyCellLoad">true</entry>
-    <entry name="CreateConnectionWhenUnavailable">false</entry>
-    <entry name="NeighborAsList">true</entry>
+    <entry name="CreateConnectionWhenUnavailable">True</entry>
+    <entry name="NeighborAsList">false</entry>
     <entry name="RGraphOn">true</entry>
     <entry name="GraphBufferSize">134217728</entry>
     <entry name="XHashSetGroupSize">4</entry>

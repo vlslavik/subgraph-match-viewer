@@ -22,6 +22,9 @@ namespace SubgraphViewer
         public static int QueryResultWidth = 800;
         public static int QueryResultHeight = 500;
         public static int QueryResultMargin = 50;
+
+        public static int CellPropertyWidth = 300;
+        public static int CellPropertyHeight = 400;
     }
 
 }
