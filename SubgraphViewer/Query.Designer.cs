@@ -30,6 +30,7 @@
         {
             this.panel_left = new System.Windows.Forms.Panel();
             this.panel_bottom = new System.Windows.Forms.Panel();
+            this.buttonClear = new System.Windows.Forms.Button();
             this.buttonMatch = new System.Windows.Forms.Button();
             this.textBoxMaxMatchNum = new System.Windows.Forms.TextBox();
             this.label7 = new System.Windows.Forms.Label();
@@ -45,7 +46,6 @@
             this.label2 = new System.Windows.Forms.Label();
             this.textBoxStartVertex = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
-            this.buttonClear = new System.Windows.Forms.Button();
             this.panel_bottom.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -85,6 +85,17 @@
             this.panel_bottom.Name = "panel_bottom";
             this.panel_bottom.Size = new System.Drawing.Size(544, 165);
             this.panel_bottom.TabIndex = 1;
+            this.panel_bottom.MouseMove += new System.Windows.Forms.MouseEventHandler(this.panel_bottom_MouseMove);
+            // 
+            // buttonClear
+            // 
+            this.buttonClear.Location = new System.Drawing.Point(0, 137);
+            this.buttonClear.Name = "buttonClear";
+            this.buttonClear.Size = new System.Drawing.Size(543, 23);
+            this.buttonClear.TabIndex = 16;
+            this.buttonClear.Text = "clear";
+            this.buttonClear.UseVisualStyleBackColor = true;
+            this.buttonClear.Click += new System.EventHandler(this.buttonClear_Click);
             // 
             // buttonMatch
             // 
@@ -213,16 +224,6 @@
             this.label1.Size = new System.Drawing.Size(77, 12);
             this.label1.TabIndex = 0;
             this.label1.Text = "start_vertex";
-            // 
-            // buttonClear
-            // 
-            this.buttonClear.Location = new System.Drawing.Point(0, 137);
-            this.buttonClear.Name = "buttonClear";
-            this.buttonClear.Size = new System.Drawing.Size(543, 23);
-            this.buttonClear.TabIndex = 16;
-            this.buttonClear.Text = "clear";
-            this.buttonClear.UseVisualStyleBackColor = true;
-            this.buttonClear.Click += new System.EventHandler(this.buttonClear_Click);
             // 
             // Query
             // 
