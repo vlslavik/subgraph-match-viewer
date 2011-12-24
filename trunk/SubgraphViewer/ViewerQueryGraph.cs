@@ -114,7 +114,7 @@ namespace SubgraphViewer
 
         public bool OverLap(Rectangle rec)
         {
-            return false;
+            return AnalyticGeometryService.SegmentIntersectRectangle(StartLocation, EndLocation, rec);
         }
 
         public void Draw(ISubGraphViewerDrawer drawer)
@@ -354,12 +354,15 @@ namespace SubgraphViewer
 
         public void AddEdge(int sid, int tid)
         {
-            if (m_AllNodes.ContainsKey(sid) && m_AllNodes.ContainsKey(tid))
+            if (sid != tid)
             {
-                ViewerQueryNode startNode = m_AllNodes[sid];
-                ViewerQueryNode endNode = m_AllNodes[tid];
-                startNode.AddOutLink(tid);
-                endNode.AddInLink(sid);
+                if (m_AllNodes.ContainsKey(sid) && m_AllNodes.ContainsKey(tid))
+                {
+                    ViewerQueryNode startNode = m_AllNodes[sid];
+                    ViewerQueryNode endNode = m_AllNodes[tid];
+                    startNode.AddOutLink(tid);
+                    endNode.AddInLink(sid);
+                }
             }
         }
 

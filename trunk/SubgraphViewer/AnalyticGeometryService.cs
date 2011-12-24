@@ -99,5 +99,56 @@ namespace SubgraphViewer
             return Math.Sqrt(r);
         }
 
+        public static int CrossProduct(Point v1, Point v2)
+        {
+            int z = v1.X * v2.Y - v2.X * v1.Y;
+            return z;
+        }
+
+        public static int Direction(Point p1, Point p2, Point p3)
+        {
+            Point v1 = new Point(p2.X - p1.X, p2.Y - p1.Y);
+            Point v2 = new Point(p3.X -p1.X, p3.Y - p1.Y);
+            return CrossProduct(v1, v2);
+        }
+
+        public static bool SegmentIntersect(Point p1, Point p2, Point p3, Point p4)
+        {
+            int d1 = Direction(p3, p4, p1);
+            int d2 = Direction(p3, p4, p2);
+            int d3 = Direction(p1, p2, p3);
+            int d4 = Direction(p1, p2, p4);
+            if (d1 * d2 < 0 && d3 * d4 < 0)
+            {
+                return true;
+            }
+
+            if (d1 == 0 && LocateInSection(p1.X, p3.X, p4.X))
+            {
+                return true;
+            }
+            if (d2 == 0 && LocateInSection(p2.X, p3.X, p4.X))
+            {
+                return true;
+            }
+            if (d3 == 0 && LocateInSection(p3.X, p1.X, p2.X))
+            {
+                return true;
+            }
+            if (d4 == 0 && LocateInSection(p4.X, p1.X, p2.X))
+            {
+                return true;
+            }
+            return false;
+        }
+
+        public static bool SegmentIntersectRectangle(Point p1, Point p2, Rectangle rec)
+        {
+            return SegmentIntersect(p1, p2, new Point(rec.Left, rec.Top), new Point(rec.Right, rec.Top))
+                || SegmentIntersect(p1, p2, new Point(rec.Right, rec.Top), new Point(rec.Right, rec.Bottom))
+                || SegmentIntersect(p1, p2, new Point(rec.Right, rec.Bottom), new Point(rec.Left, rec.Bottom))
+                || SegmentIntersect(p1, p2, new Point(rec.Left, rec.Bottom), new Point(rec.Left, rec.Top));
+        }
+
     }
 }
