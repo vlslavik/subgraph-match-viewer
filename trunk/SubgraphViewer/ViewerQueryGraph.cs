@@ -388,6 +388,7 @@ namespace SubgraphViewer
                 if (vqe.OverLap(removeArea) == true)
                 {
                     RemoveEdge(vqe.StartNodeID, vqe.EndNodeID);
+                    return;
                 }
             }
         }

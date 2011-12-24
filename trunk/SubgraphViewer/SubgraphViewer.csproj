@@ -96,6 +96,7 @@
       <DependentUpon>CellProperty.cs</DependentUpon>
     </Compile>
     <Compile Include="ImageResources.cs" />
+    <Compile Include="MyCursor.cs" />
     <Compile Include="Query.cs">
       <SubType>Form</SubType>
     </Compile>

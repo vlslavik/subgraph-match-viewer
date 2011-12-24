@@ -32,7 +32,6 @@ namespace SubgraphViewer
             m_ViewerGraph = new ViewerQueryGraph(m_GraphDrawer);
             m_ToolBox = new ToolBox(toolBoxDrawer);
             m_IndexLoaded = false;
-            
             //m_ViewerGraph = SampleQueryGraph();
             
         }
@@ -83,7 +82,14 @@ namespace SubgraphViewer
 
         private void Query_MouseMove(object sender, MouseEventArgs e)
         {
-            //textBox_StartVertex.Text = e.X.ToString() + " " + e.Y.ToString();
+            if (m_ToolBox.SelectedItem != null && m_ToolBox.SelectedItem.Name == "eraser")
+            {
+                Cursor = MyCursor.EraserCursor;
+            }
+            else
+            {
+                Cursor = Cursors.Default;
+            }
         }
 
         private void Query_MouseDown(object sender, MouseEventArgs e)
@@ -108,14 +114,12 @@ namespace SubgraphViewer
 
         private void PanelLeft_MouseMove(object sender, MouseEventArgs e)
         {
-
+            Cursor = Cursors.Default;
         }
 
         private void Query_Paint(object sender, PaintEventArgs e)
         {
             m_ViewerGraph.Draw();
-            //Pen p = new Pen(Color.Black);
-            //e.Graphics.DrawRectangle(p, m_ClientRegion);
         }
 
         private void panel_left_Paint(object sender, PaintEventArgs e)
@@ -128,6 +132,14 @@ namespace SubgraphViewer
             //textBoxStartVertex.Text = e.X.ToString() + " " + e.Y.ToString();
             m_ToolBox.SetSelectedItem(e.Location);
             panel_left.Invalidate();
+            if (m_ToolBox.SelectedItem != null && m_ToolBox.SelectedItem.Name == "eraser")
+            {
+                Cursor = MyCursor.EraserCursor;
+            }
+            else
+            {
+                Cursor = Cursors.Default;
+            }
         }
 
         private void buttonMatch_Click(object sender, EventArgs e)
@@ -275,6 +287,11 @@ namespace SubgraphViewer
             Clear();
             this.Invalidate();
             UpdateLabelList();
+        }
+
+        private void panel_bottom_MouseMove(object sender, MouseEventArgs e)
+        {
+            Cursor = Cursors.Default;
         }
 
 

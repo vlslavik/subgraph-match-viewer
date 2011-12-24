@@ -31,8 +31,8 @@ namespace SubgraphViewer
         public static int SplashFormWidth = 400;
         public static int SplashFormHeight = 20;
 
-        public static int MouseEraserWidth = 8;
-        public static int MouseEraserHeight = 5;
+        public static int MouseEraserWidth = 15;
+        public static int MouseEraserHeight = 15;
 
         public static List<string> HostNameList;
 
