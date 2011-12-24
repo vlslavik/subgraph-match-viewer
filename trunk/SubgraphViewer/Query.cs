@@ -33,7 +33,6 @@ namespace SubgraphViewer
             m_ToolBox = new ToolBox(toolBoxDrawer);
             m_IndexLoaded = false;
             //m_ViewerGraph = SampleQueryGraph();
-            
         }
 
 
@@ -106,7 +105,10 @@ namespace SubgraphViewer
             }
             else if (m_ToolBox.SelectedItem != null && m_ToolBox.SelectedItem.Name == "eraser")
             {
-                m_ViewerGraph.Remove(new Rectangle(e.Location.X, e.Location.Y, ViewerConfig.MouseEraserWidth, ViewerConfig.MouseEraserHeight));
+                m_ViewerGraph.Remove(new Rectangle(e.Location.X - ViewerConfig.MouseEraserWidth / 2 , 
+                    e.Location.Y - ViewerConfig.MouseEraserHeight /2, 
+                    ViewerConfig.MouseEraserWidth, 
+                    ViewerConfig.MouseEraserHeight));
                 UpdateLabelList();
                 this.Invalidate();
             }
