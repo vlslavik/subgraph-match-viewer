@@ -174,6 +174,7 @@ namespace SubgraphViewer
         {
             m_ID = vqn.ID;
             m_Center = vqn.Center;
+            m_Label = vqn.Label;
             m_OutLinkList = new HashSet<int>(vqn.OutLinkList);
             m_InLinkList = new HashSet<int>(vqn.InLinkList);
         }
@@ -499,6 +500,18 @@ namespace SubgraphViewer
                 }
             }
             return true;
+        }
+
+        public int WhichNode(Point location)
+        {
+            foreach (ViewerQueryNode vqn in m_AllNodes.Values)
+            {
+                if (vqn.Overlap(location, ViewerConfig.NodeRadius) == true)
+                {
+                    return vqn.ID;
+                }
+            }
+            return -1;
         }
     }
 }

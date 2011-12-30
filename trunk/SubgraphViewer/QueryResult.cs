@@ -35,7 +35,7 @@ namespace SubgraphViewer
             //this.Width = ViewerConfig.QueryResultWidth;
             //this.Height = ViewerConfig.QueryResultHeight;
             this.ClientSize = new Size(ViewerConfig.QueryResultWidth, ViewerConfig.QueryResultHeight);
-            //this.FormBorderStyle = FormBorderStyle.Fixed3D;
+            this.FormBorderStyle = FormBorderStyle.Fixed3D;
             this.AutoScroll = true;
             this.AutoScrollMinSize = new Size(ViewerConfig.QueryPanleWidth, 20000);
         }
