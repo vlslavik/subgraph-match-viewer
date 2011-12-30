@@ -45,6 +45,7 @@ namespace SubgraphViewer
             m_CellIDList = new List<long>();
             m_KeyValueTable.Add("ID", new List<string>());
             m_KeyValueTable.Add("CellID", new List<string>());
+            m_KeyValueTable.Add("Label", new List<string>());
             List<ViewerResultNode> nodeList = vrg.GetSortedIDNodeList();
             for (int i = 0; i < nodeList.Count; ++i)
             {
@@ -52,6 +53,7 @@ namespace SubgraphViewer
                 m_CellIDList.Add(nodeList[i].MatchID);
                 m_KeyValueTable["ID"].Add(nodeList[i].ID.ToString());
                 m_KeyValueTable["CellID"].Add(nodeList[i].MatchID.ToString());
+                m_KeyValueTable["Label"].Add(nodeList[i].Label);
             }
             m_Row = m_IDList.Count;
             m_Col = m_KeyValueTable.Keys.Count;

@@ -22,16 +22,19 @@ namespace SubgraphViewer
         private bool m_IndexLoaded;
         private Rectangle m_ClientRegion;
         private SubgraphViewerDrawer m_GraphDrawer;
+        private int m_StartNodeID = -1;
+        private string m_SetLabelHint = "node_id-label,node_id_label,...";
         public Query()
         {
             InitializeComponent();
             IntializeFormLayout();
-            
             m_GraphDrawer = new SubgraphViewerDrawer(this.CreateGraphics());
             SubgraphViewerDrawer toolBoxDrawer = new SubgraphViewerDrawer(panel_left.CreateGraphics());
             m_ViewerGraph = new ViewerQueryGraph(m_GraphDrawer);
             m_ToolBox = new ToolBox(toolBoxDrawer);
             m_IndexLoaded = false;
+            textBoxSetLabel.Text = m_SetLabelHint;
+            textBoxMaxMatchNum.Text = "1024";
             //m_ViewerGraph = SampleQueryGraph();
         }
 
@@ -94,23 +97,46 @@ namespace SubgraphViewer
         private void Query_MouseDown(object sender, MouseEventArgs e)
         {
             //textBoxStartVertex.Text = e.X.ToString() + " " + e.Y.ToString();
-            if (m_ToolBox.SelectedItem != null && m_ToolBox.SelectedItem.Name == "node")
+            if (e.Button == MouseButtons.Left)
             {
-                if (m_ClientRegion.Contains(e.Location) == false || m_ViewerGraph.AddNode(e.Location) == false)
+                if (m_ToolBox.SelectedItem != null && m_ToolBox.SelectedItem.Name == "node")
                 {
-                    MessageBox.Show("please select another proper location!", "Hint");
+                    if (m_ClientRegion.Contains(e.Location) == false || m_ViewerGraph.AddNode(e.Location) == false)
+                    {
+                        MessageBox.Show("please select another proper location!", "Hint");
+                    }
+                    UpdateLabelList();
+                    this.Invalidate();
                 }
-                UpdateLabelList();
-                this.Invalidate();
+                else if (m_ToolBox.SelectedItem != null && m_ToolBox.SelectedItem.Name == "eraser")
+                {
+                    m_ViewerGraph.Remove(new Rectangle(e.Location.X - ViewerConfig.MouseEraserWidth / 2,
+                        e.Location.Y - ViewerConfig.MouseEraserHeight / 2,
+                        ViewerConfig.MouseEraserWidth,
+                        ViewerConfig.MouseEraserHeight));
+                    UpdateLabelList();
+                    this.Invalidate();
+                }
             }
-            else if (m_ToolBox.SelectedItem != null && m_ToolBox.SelectedItem.Name == "eraser")
+            else if(e.Button == MouseButtons.Right)
             {
-                m_ViewerGraph.Remove(new Rectangle(e.Location.X - ViewerConfig.MouseEraserWidth / 2 , 
-                    e.Location.Y - ViewerConfig.MouseEraserHeight /2, 
-                    ViewerConfig.MouseEraserWidth, 
-                    ViewerConfig.MouseEraserHeight));
-                UpdateLabelList();
-                this.Invalidate();
+                if (m_ToolBox.SelectedItem != null && m_ToolBox.SelectedItem.Name == "node")
+                {
+                    if (m_StartNodeID == -1)
+                    {
+                        m_StartNodeID = m_ViewerGraph.WhichNode(e.Location);
+                    }
+                    else
+                    {
+                        int endNodeID = m_ViewerGraph.WhichNode(e.Location);
+                        if (endNodeID != -1)
+                        {
+                            m_ViewerGraph.AddEdge(m_StartNodeID, endNodeID);
+                            Invalidate();
+                            m_StartNodeID = -1;
+                        }
+                    }
+                }
             }
         }
 
@@ -223,21 +249,6 @@ namespace SubgraphViewer
             return vqg;
         }
 
-        private void button2_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                int sid = int.Parse(textBoxStartVertex.Text.Trim());
-                int tid = int.Parse(textBoxEndVertex.Text.Trim());
-                m_ViewerGraph.AddEdge(sid, tid);
-                Invalidate();
-            }
-            catch (System.Exception ex)
-            {
-            	
-            }
-        }
-
         private void UpdateLabelList()
         {
             listBoxLabelList.Items.Clear();
@@ -245,21 +256,6 @@ namespace SubgraphViewer
             for (int i = 0; i < sortedList.Count; ++i)
             {
                 listBoxLabelList.Items.Add(sortedList[i].ID + " " + sortedList[i].Label);
-            }
-        }
-
-        private void button1_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                int vid = int.Parse(textBoxVertexID.Text.Trim());
-                string label = textBoxVertexLabel.Text.Trim();
-                m_ViewerGraph.SetLabel(vid, label);
-                UpdateLabelList();
-            }
-            catch (System.Exception ex)
-            {
-            	
             }
         }
 
@@ -277,11 +273,9 @@ namespace SubgraphViewer
         private void Clear()
         {
             m_ViewerGraph = new ViewerQueryGraph(m_GraphDrawer);
-            textBoxEndVertex.Text = "";
-            textBoxMaxMatchNum.Text = "";
-            textBoxStartVertex.Text = "";
-            textBoxVertexID.Text = "";
-            textBoxVertexLabel.Text = "";
+            textBoxMaxMatchNum.Text = "1024";
+            listBoxLabelList.Items.Clear();
+            textBoxSetLabel.Text = m_SetLabelHint;
         }
 
         private void buttonClear_Click(object sender, EventArgs e)
@@ -294,6 +288,36 @@ namespace SubgraphViewer
         private void panel_bottom_MouseMove(object sender, MouseEventArgs e)
         {
             Cursor = Cursors.Default;
+        }
+
+        private void buttonSetLabel_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                string text = textBoxSetLabel.Text.Trim();
+                string[] idLabelPair = text.Split(',');
+                foreach (string pa in idLabelPair)
+                {
+                    string[] wd = pa.Split('-');
+                    int id = int.Parse(wd[0]);
+                    int label = int.Parse(wd[1]);
+                    m_ViewerGraph.SetLabel(id, label.ToString());
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("please check the format of label");
+            }
+            Invalidate();
+            UpdateLabelList();
+        }
+
+        private void textBoxSetLabel_MouseDown(object sender, MouseEventArgs e)
+        {
+            if (textBoxSetLabel.Text.Trim() == m_SetLabelHint)
+            {
+                textBoxSetLabel.Text = "";
+            }
         }
 
 

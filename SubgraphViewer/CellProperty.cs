@@ -27,6 +27,8 @@ namespace SubgraphViewer
         private void InitializeLayout()
         {
             this.ClientSize = new Size(ViewerConfig.CellPropertyWidth, ViewerConfig.CellPropertyHeight);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
+            this.AutoScroll = true;
             dataGridView1.Location = new Point(0, 0);
             dataGridView1.Width = ViewerConfig.CellPropertyWidth;
             dataGridView1.Height = ViewerConfig.CellPropertyHeight;
@@ -34,7 +36,7 @@ namespace SubgraphViewer
             dataGridView1.ReadOnly = true;
             dataGridView1.RowHeadersVisible = false;
             dataGridView1.AllowUserToAddRows = false;
-            dataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            dataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.DisplayedCells;
         }
 
         private void FillData(CellProperTable cpt)
